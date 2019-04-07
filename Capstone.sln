@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capstone", "Capstone\Capstone.csproj", "{13B58E53-CCDF-426D-A1ED-34C52C303C90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capstone.Test", "Capstone.Test\Capstone.Test.csproj", "{1A6A4B76-3334-4C62-9BF2-B5D7A5363274}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{13B58E53-CCDF-426D-A1ED-34C52C303C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13B58E53-CCDF-426D-A1ED-34C52C303C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13B58E53-CCDF-426D-A1ED-34C52C303C90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A6A4B76-3334-4C62-9BF2-B5D7A5363274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A6A4B76-3334-4C62-9BF2-B5D7A5363274}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A6A4B76-3334-4C62-9BF2-B5D7A5363274}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A6A4B76-3334-4C62-9BF2-B5D7A5363274}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

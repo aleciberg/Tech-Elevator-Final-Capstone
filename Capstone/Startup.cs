@@ -47,7 +47,6 @@ namespace Capstone
             }
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {
