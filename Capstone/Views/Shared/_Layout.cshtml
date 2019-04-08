@@ -4,10 +4,27 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Capstone</title>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+    <style>
+        .navbarTwo {
+            background-color: #bb0000;
+            min-height: 480px;
+        }
+
+        .navbar-brand {
+            font-size: large;
+            color: grey;
+        }
+
+        .navbar-collapse {
+            display: block;
+            margin-bottom: 0px;
+        }
+    </style>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" type="text/css" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -17,24 +34,19 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Capstone</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="#">Choice</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="#">Choice</a></li>
-                </ul>
-            </div>
+    <nav class="navContainer">
+        <div class="navLogo">
+            <a asp-area="" asp-controller="Home" asp-action="Index">CityTours</a>
+        </div>
+        <div class="navLink">
+            <ul class="navFun">
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="AddLandmark">Add Landmark</a></li>
+            </ul>
+            <ul class="loginRegister">
+                <li><a asp-area="" asp-controller="Home" asp-action="#">Register</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="#">Login</a></li>
+            </ul>
         </div>
     </nav>
 

@@ -1,37 +1,88 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
-for details on configuring this project to bundle and minify static web assets. */
+﻿/*Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
+ Wrapping element 
+ Set some basic padding to keep content from hitting the edges 
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Carousel */
+ Carousel 
 .carousel-caption p {
     font-size: 20px;
     line-height: 1.4;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
+ Make .svg files in the carousel display properly in older browsers 
 .carousel-inner .item img[src$=".svg"] {
     width: 100%;
 }
 
-/* QR code generator */
+ QR code generator 
 #qrCode {
     margin: 15px;
 }
 
-/* Hide/rearrange for smaller screens */
+ Hide/rearrange for smaller screens 
 @media screen and (max-width: 767px) {
-    /* Hide captions */
+     Hide captions 
     .carousel-caption {
         display: none;
     }
+}*/
+
+.navContainer {
+    position: relative;
+    min-height: 250px;
+    background-color: #bb0000;
+    border: 5px solid grey;
 }
+
+.navLink {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+    .navLink > ul > li {
+        display: inline;
+        padding: 10px;
+    }
+
+        .navLink > ul > li > a {
+            font-size: 18px;
+            text-decoration: none;
+            color: white;
+        }
+
+
+    .navLink > ul {
+        padding-left: 5px;
+    }
+
+    .navLink > .loginRegister {
+        display: inline-block;
+        float: right;
+    }
+
+    .navLink > .navFun {
+        display: inline-block;
+        float: left;
+    }
+
+.navLogo {
+    display: block;
+    height: 85%;
+    padding: 10px;
+}
+
+    .navLogo > a {
+        font-size: 36px;
+        text-decoration: none;
+        color: white;
+    }
