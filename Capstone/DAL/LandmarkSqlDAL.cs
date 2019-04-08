@@ -110,7 +110,7 @@ namespace Capstone.DAL
                 Name = Convert.ToString(reader["name"]),
                 State = Convert.ToString(reader["state"]),
                 StreetAddress = Convert.ToString(reader["address"]),
-                UserID = Convert.ToInt32(reader["user_id"]),
+                UserID = Convert.ToInt32(reader["submitter_id"]),
                 ZipCode = Convert.ToString(reader["zip"])
             };
         }
