@@ -11,7 +11,7 @@ namespace Capstone.DAL
     {
         private string connectionString;
         private const string SQL_GetAllLandmarks = @"SELECT * FROM landmark ORDER BY landmark.name;";
-        private const string SQL_GetLandmarkFromID = @"SELECT * FROM landmark where landmark_id = @landmark_id;"
+        private const string SQL_GetLandmarkFromID = @"SELECT * FROM landmark where landmark_id = @landmark_id;";
         private const string SQL_AddLandmark =
             @"INSERT INTO landmark (submitter_id, name, category, description, address, " +
             "city, state, zip, latitude, longitude, hours_of_operation) " +
