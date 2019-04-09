@@ -18,20 +18,18 @@ namespace Capstone.Controllers
             this.landmarkDAL = landmarkDAL;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View(landmarkDAL.GetAllLandmarks());
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public IActionResult Detail(int id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+            Landmark landmark = landmarkDAL.GetLandmarkFromID(id);
 
-        public IActionResult Detail()
-        {
-            return View();
+            return View(landmark);
         }
 
         public IActionResult AddLandmark()
@@ -39,5 +37,10 @@ namespace Capstone.Controllers
             return View();
         }
 
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }
