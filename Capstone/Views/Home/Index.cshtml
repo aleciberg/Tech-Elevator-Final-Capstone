@@ -6,15 +6,15 @@
 
 @foreach (Landmark landmark in Model)
 {
-    <div class="landmark">
+    <div class="index_landmark">
         @{
             string landmarkImageFile = "/images/landmarks/" + landmark.ImageLocation;
         }
         <a asp-controller="Home" asp-action="Detail" asp-route-id="@landmark.ID">
-            <img class="landmark_image" src="@landmarkImageFile" />
+            <img class="index_landmark_image" src="@landmarkImageFile" />
         </a>
 
-        <div class="landmark_text">
+        <div class="index_landmark_text">
             <a asp-controller="Home" asp-action="Detail" asp-route-id="@landmark.ID">
                 <h3>@landmark.Name - @landmark.State</h3>
             </a>
