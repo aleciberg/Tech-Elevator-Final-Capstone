@@ -1,7 +1,26 @@
-﻿@{
+﻿@model List<Landmark>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div>
-    <h3>This is the home page for the skeleton application.</h3>
-</div>
+@foreach (Landmark landmark in Model)
+{
+    <div class="index_landmark">
+        @{
+            string landmarkImageFile = "/images/landmarks/" + landmark.ImageLocation;
+        }
+        <a asp-controller="Home" asp-action="Detail" asp-route-id="@landmark.ID">
+            <img class="index_landmark_image" src="@landmarkImageFile" />
+        </a>
+
+        <div class="index_landmark_text">
+            <a asp-controller="Home" asp-action="Detail" asp-route-id="@landmark.ID">
+                <h3>@landmark.Name - @landmark.State</h3>
+            </a>
+
+            <p>@landmark.Description</p>
+        </div>
+
+    </div>
+}

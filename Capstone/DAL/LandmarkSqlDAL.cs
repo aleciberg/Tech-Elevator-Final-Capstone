@@ -16,7 +16,8 @@ namespace Capstone.DAL
             @"INSERT INTO landmark (submitter_id, name, category, description, address, " +
             "city, state, zip, latitude, longitude, hours_of_operation) " +
             "VALUES (@submitter_id, @name, @category, @description, @address, " +
-            "@city, @state, @zip, @latitude, @longitude, @hours_of_operation);";
+            "@city, @state, @zip, @latitude, @longitude, @hours_of_operation);" +
+            "SELECT CAST(SCOPE_IDENTITY() as int);";
 
         public LandmarkSqlDAL(string dbConnectionString)
         {
@@ -71,7 +72,7 @@ namespace Capstone.DAL
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
-                        SqlCommand cmd = new SqlCommand(SQL_AddLandmark, conn);
+                        SqlCommand cmd = new SqlCommand(SQL_AddLandmark, connection);
                         cmd.Parameters.AddWithValue("@submitter_id", landmark.UserID);
                         cmd.Parameters.AddWithValue("@name", landmark.Name);
                         cmd.Parameters.AddWithValue("@category", landmark.Category);
@@ -110,7 +111,7 @@ namespace Capstone.DAL
                 Name = Convert.ToString(reader["name"]),
                 State = Convert.ToString(reader["state"]),
                 StreetAddress = Convert.ToString(reader["address"]),
-                UserID = Convert.ToInt32(reader["user_id"]),
+                UserID = Convert.ToInt32(reader["submitter_id"]),
                 ZipCode = Convert.ToString(reader["zip"])
             };
         }
