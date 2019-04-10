@@ -4,28 +4,34 @@
     ViewData["Title"] = "Detail";
 }
 
-<h2>Detail</h2>
+<h1>@Model.Name</h1>
 
-<div>
-    <div id="detailLeftBox">
-        <h1>@Model.Name</h1>
-        <img src="~/images/landmarks/@Model.ImageLocation" />
-    </div>
+<div class="detail">
+    <img id="detailImage" src="~/images/landmarks/@Model.ImageLocation" />
+
     <div id="detailRightBox">
-        <h4>@Model.Category</h4>
-        <h4>@Model.Description</h4>
-        <h4>@Model.StreetAddress</h4>
-        <h4>@Model.City</h4>
-        <h4>@Model.State</h4>
-        <h4>@Model.ZipCode</h4>
-        <h4>@Model.Latitude</h4>
-        <h4>@Model.Longitude</h4>
-        <h4>@Model.HoursOfOperation</h4>
-        @*<a href="https://www.google.com/maps/search/?api=1&@Model.Name">Google Maps Search</a>*@
+
+        <h2>Landmark information:</h2>
+        <ul class="list_facts">
+            <li>
+                Category: @Model.Category
+            </li>
+            <li>
+                Location: @Model.StreetAddress @Model.City, @Model.State @Model.ZipCode
+            </li>
+            <li>
+                Hours of operations: @Model.HoursOfOperation
+            </li>
+
+            <a href="https://www.google.com/maps/search/@Model.Name">Google Maps Search</a>
+        </ul>
 
     </div>
+
 </div>
+
+<p>@Model.Description</p> <br>
+
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>
