@@ -1,10 +1,10 @@
 ﻿@model Capstone.Models.Landmark
 
 @{
-    ViewData["Title"] = "AddLandmark";
+    ViewData["Title"] = "Add Landmark";
 }
 
-<h2>AddLandmark</h2>
+<h2>Add Landmark</h2>
 
 <h4>Landmark</h4>
 <hr />
@@ -12,11 +12,6 @@
     <div class="col-md-4">
         <form asp-action="AddLandmark">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ID" class="control-label"></label>
-                <input asp-for="ID" class="form-control" />
-                <span asp-validation-for="ID" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="UserID" class="control-label"></label>
                 <input asp-for="UserID" class="form-control" />
@@ -58,16 +53,6 @@
                 <span asp-validation-for="ZipCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Latitude" class="control-label"></label>
-                <input asp-for="Latitude" class="form-control" />
-                <span asp-validation-for="Latitude" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Longitude" class="control-label"></label>
-                <input asp-for="Longitude" class="form-control" />
-                <span asp-validation-for="Longitude" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="HoursOfOperation" class="control-label"></label>
                 <input asp-for="HoursOfOperation" class="form-control" />
                 <span asp-validation-for="HoursOfOperation" class="text-danger"></span>
@@ -78,7 +63,7 @@
                 <span asp-validation-for="ImageLocation" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Add New Landmark" class="btn btn-default" />
             </div>
         </form>
     </div>
