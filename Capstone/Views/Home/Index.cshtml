@@ -21,12 +21,15 @@
 
             <p>@landmark.Description</p>
 
-            <script>
-                distanceBetweenTwoLocations()
-            </script>
 
 
-            <p>Distance from your location: </p>
+
+            <p id="distanceToLocation">
+                Distance from your location:
+                <script>
+                    distanceBetweenTwoLocations(40.001619, -83.055223, 39.987214, -83.040930);
+                </script>
+            </p>
 
 
         </div>
