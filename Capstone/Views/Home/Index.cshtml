@@ -3,6 +3,13 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges&callback=initMap">
+</script>
+<script src="~/js/site.js">
+</script>
+
+
 
 @foreach (Landmark landmark in Model)
 {
@@ -21,18 +28,19 @@
 
             <p>@landmark.Description</p>
 
-
-
-
-            <p id="distanceToLocation">
-                Distance from your location:
-                <script>
-                    distanceBetweenTwoLocations(40.001619, -83.055223, 39.987214, -83.040930);
-                </script>
+            @{
+                var distanceID = "distanceToLocation" + landmark.ID;
+            }
+            <p id="@distanceID">
+                Distance from your location...
             </p>
 
+            <script>
+                updateElementDistance(@distanceID, @landmark.Latitude, @landmark.Longitude)
+            </script>
 
         </div>
 
     </div>
 }
+
