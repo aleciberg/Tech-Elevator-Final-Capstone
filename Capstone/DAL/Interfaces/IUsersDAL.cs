@@ -9,5 +9,6 @@ namespace Capstone.DAL.Interfaces
     public interface IUsersDAL
     {
         int AddUser(User user);
+        User GetUser(string username);
     }
 }
