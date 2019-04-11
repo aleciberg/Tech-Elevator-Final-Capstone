@@ -5,7 +5,9 @@
 
 window.home_lat = 39.997863; //default values
 window.home_lon = -83.042820; //default values
-window.distanceElements = [];
+if (window.distanceElements == null) {
+    window.distanceElements = [];
+}
 
 function initMap() {
     if (navigator.geolocation) {
@@ -21,7 +23,6 @@ function initMap() {
         //handleLocationError(false, infoWindow, map.getCenter());
     }   
 }
-
 
 function distanceFromCurrentLocationInMiles(lat, lon) {
     var R = 6371e3; // metres
@@ -50,16 +51,16 @@ function updateAllDistanceElements() {
     });
 }
 
-function updateElementDistance(element, latitude, longitude) {
+function updateElementDistance(elementDiv, element, latitude, longitude) {
     const distanceToLocationElement = document.getElementById(element.id);
     let distance = distanceFromCurrentLocationInMiles(latitude, longitude);
     distanceToLocationElement.innerText = distanceString(distance);
 
-    addDistanceElement(element, latitude, longitude);
+    addDistanceElement(elementDiv, element, latitude, longitude);
 }
 
-function addDistanceElement(element, latitude, longitude) {
-    var distanceElement = { Element: element, Latitude: latitude, Longitude: longitude }
+function addDistanceElement(elementDiv, element, latitude, longitude) {
+    var distanceElement = { ElementDiv: elementDiv, Element: element, Latitude: latitude, Longitude: longitude }
     window.distanceElements.push(distanceElement);
 }
 
@@ -74,4 +75,29 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
+}
+
+function indexSearch(number) {
+    distanceElements.forEach(item => {
+        let distance = distanceFromCurrentLocationInMiles(item.Latitude, item.Longitude);
+
+        if (distance <= number) {
+            showDiv(item.ElementDiv);
+        }
+        else {
+            hideDiv(item.ElementDiv);
+        }
+    });
+
+
+}
+
+function hideDiv(element) {
+    var divElement = document.getElementById(element.id);
+    divElement.style.display = "none";
+}
+
+function showDiv(element) {
+    var divElement = document.getElementById(element.id);
+    divElement.style.display = "flex";
 }

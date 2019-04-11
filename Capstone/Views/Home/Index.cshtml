@@ -3,17 +3,20 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges&callback=initMap">
-</script>
 <script src="~/js/site.js">
 </script>
 
 
+<div class="search">
+    Show only landmarks <input id="index_distance_search_box" type="number"
+           id="search"
+           onchange="indexSearch(this.value)" /> miles away.
+</div>
 
 @foreach (Landmark landmark in Model)
 {
-    <div class="index_landmark">
+    var landmarkDiv = "landmarkDiv" + landmark.ID;
+    <div class="index_landmark" id="@landmarkDiv">
         @{
             string landmarkImageFile = "/images/landmarks/" + landmark.ImageLocation;
         }
@@ -36,11 +39,13 @@
             </p>
 
             <script>
-                updateElementDistance(@distanceID, @landmark.Latitude, @landmark.Longitude)
+                updateElementDistance(@landmarkDiv, @distanceID, @landmark.Latitude, @landmark.Longitude)
             </script>
-
         </div>
-
     </div>
 }
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges&callback=initMap">
+</script>
 
