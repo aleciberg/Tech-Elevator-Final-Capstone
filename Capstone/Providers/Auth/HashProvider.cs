@@ -12,7 +12,7 @@ namespace Capstone.Providers.Auth
 
         public HashedPassword HashPassword(string plainTextPassword)
         {            
-            Rfc2898DeriveBytes rfc = new Rfc2898DeriveBytes(plainTextPassword, 8, WorkFactor);
+            Rfc2898DeriveBytes rfc = new Rfc2898DeriveBytes(plainTextPassword, 0, WorkFactor);
 
             byte[] hash = rfc.GetBytes(20);
 
@@ -23,7 +23,7 @@ namespace Capstone.Providers.Auth
 
         public bool VerifyPassword(string existingHashedPassword, string plainTextPassword)
         {
-            Rfc2898DeriveBytes rfc = new Rfc2898DeriveBytes(plainTextPassword, WorkFactor);
+            Rfc2898DeriveBytes rfc = new Rfc2898DeriveBytes(plainTextPassword, 0, WorkFactor);
 
             byte[] hash = rfc.GetBytes(20);
 
@@ -35,11 +35,11 @@ namespace Capstone.Providers.Auth
 
     public class HashedPassword
     {
-        public string Password { get; }
-
         public HashedPassword(string password)
         {
             this.Password = password;
         }
+
+        public string Password { get; }
     }
 }

@@ -115,6 +115,22 @@ namespace Capstone.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult Login(LoginViewModel lvm)
+        {
+            if (ModelState.IsValid)
+            {
+                bool validLogin = authProvider.SignIn(lvm.Email, lvm.Password);
+                if (validLogin)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+
+            return View(lvm);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
