@@ -31,7 +31,7 @@ namespace Capstone.Providers.Auth
 
             if (user != null && email == user.Email && password == user.Password)
             {
-                Session.SetString(SessionKey, user.Username);
+                Session.SetString(SessionKey, user.Email);
                 return true;
             }
 

@@ -17,6 +17,7 @@ namespace Capstone.Controllers
         private readonly ILandmarkSqlDAL landmarkDAL;
         private readonly IAuthProvider authProvider;
         private readonly IUsersDAL usersDAL;
+        public static string SessionKey = "Auth_User";
 
 
         public HomeController(ILandmarkSqlDAL landmarkDAL, IAuthProvider authProvider, IUsersDAL usersDAL)
@@ -28,9 +29,9 @@ namespace Capstone.Controllers
 
         private void SetSession()
         {
-            if (HttpContext.Session.GetString("username") == null)
+            if (HttpContext.Session.GetString(SessionKey) == null)
             {
-                HttpContext.Session.SetString("username", "");
+                HttpContext.Session.SetString(SessionKey, "");
             }
         }
 
@@ -53,7 +54,18 @@ namespace Capstone.Controllers
         public IActionResult AddLandmark()
         {
             SetSession();
-            return View();
+
+            User user = authProvider.GetCurrentUser();
+
+            Landmark landmark = new Landmark();
+
+            LandmarkUserViewModel luvm = new LandmarkUserViewModel()
+            {
+                Landmark = landmark,
+                User = user
+            };
+
+            return View(luvm);
         }
 
         [HttpPost]
@@ -62,6 +74,13 @@ namespace Capstone.Controllers
         {
 
             //TODO: Add user to model before passing
+            User user = authProvider.GetCurrentUser();
+
+            LandmarkUserViewModel luvm = new LandmarkUserViewModel()
+            {
+                User = user,
+                Landmark = landmark
+            };
 
             SetSession();
             if (!ModelState.IsValid)
