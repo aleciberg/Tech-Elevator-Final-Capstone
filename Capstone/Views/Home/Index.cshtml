@@ -4,18 +4,13 @@
     ViewData["Title"] = "Home Page";
 }
 
-<head>
-    <script src="~/js/site.js">
-    </script>
-</head>
-
-
 <div class="search">
     Show only landmarks within <input id="index_distance_search_box"
                                       type="number"
                                       onchange="indexSearch(this.value)"
                                       onkeyup="indexSearch(this.value)"
-                                      onclick="indexSearch(this.value)" /> miles.
+                                      onclick="indexSearch(this.value)" 
+                                      value="15"/> miles.
 </div>
 
 <div id="map">
@@ -57,5 +52,3 @@
     </div>
 }
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges&callback=initMap">
-</script>

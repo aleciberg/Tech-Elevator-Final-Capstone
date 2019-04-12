@@ -5,6 +5,7 @@
 
 if (window.map == null) {
     window.map;
+    window.marker = false;
 }
 
 if (window.home_lat == null) {
@@ -13,6 +14,10 @@ if (window.home_lat == null) {
 }
 if (window.distanceElements == null) {
     window.distanceElements = [];
+}
+
+if (window.searchRadius == null) {
+    window.searchRadius = 15;
 }
 
 function initMap() {
@@ -37,12 +42,48 @@ function initMap() {
     //Map options.
     var options = {
         center: centerOfMap, //Set center.
-        zoom: 4 //The zoom value.
+        zoom: 12 //The zoom value.
     };
 
     //Create the map object.
     window.map = new google.maps.Map(document.getElementById('map'), options);
 
+    //Listen for any clicks on the map.
+    google.maps.event.addListener(map, 'click', function (event) {
+        //Get the location that the user clicked.
+        var clickedLocation = event.latLng;
+        //If the marker hasn't been added.
+        if (marker === false) {
+            //Create the marker.
+            marker = new google.maps.Marker({
+                position: clickedLocation,
+                map: map,
+                draggable: true //make it draggable
+            });
+            //Listen for drag events!
+            google.maps.event.addListener(marker, 'dragend', function (event) {
+                markerLocation();
+            });
+        } else {
+            //Marker has already been added, so just change its location.
+            marker.setPosition(clickedLocation);
+        }
+        //Get the marker's location.
+        markerLocation();
+
+        indexSearch(window.searchRadius)
+    });
+}
+
+
+function markerLocation() {
+    //Get location.
+    var currentLocation = marker.getPosition();
+    //Add lat and lng values to a field that we can save.
+    window.home_lat = currentLocation.lat(); //latitude
+    window.home_lon = currentLocation.lng(); //longitude
+
+    updateAllDistanceElements();
 }
 
 
@@ -107,6 +148,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 function indexSearch(number) {
+    window.searchRadius = number;
     distanceElements.forEach(item => {
         let distance = distanceFromCurrentLocationInMiles(item.Latitude, item.Longitude);
 
