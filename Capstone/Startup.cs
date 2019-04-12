@@ -48,6 +48,13 @@ namespace Capstone
             services.AddScoped<IUsersDAL, UsersSqlDAL>(p => new UsersSqlDAL(connectionString));
             services.AddScoped<IAuthProvider, SessionAuthProvider>();
 
+            // Add CORS policy
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMvc()
@@ -72,6 +79,7 @@ namespace Capstone
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
+            app.UseCors("CorsPolicy");
 
             app.UseMvc(routes =>
             {
@@ -79,6 +87,7 @@ namespace Capstone
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

@@ -3,17 +3,21 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<script src="~/js/site.js">
-</script>
-
 
 <div class="search">
     Show only landmarks within <input id="index_distance_search_box"
                                       type="number"
                                       onchange="indexSearch(this.value)"
                                       onkeyup="indexSearch(this.value)"
-                                      onclick="indexSearch(this.value)" /> miles.
+                                      onclick="indexSearch(this.value)" 
+                                      value="15"/> miles.
 </div>
+
+<div id="map">
+    @*<iframe width="940" height="400" frameborder="0"
+        src="https://www.google.com/maps/embed/v1/view?zoom=17&center=0,0&key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges" allowfullscreen></iframe>;*@
+</div>
+
 
 @foreach (Landmark landmark in Model)
 {
@@ -47,8 +51,4 @@
         </div>
     </div>
 }
-
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges&callback=initMap">
-</script>
 

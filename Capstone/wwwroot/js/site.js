@@ -3,12 +3,21 @@
 
 // Write your JavaScript code.
 
+if (window.map == null) {
+    window.map;
+    window.marker = false;
+}
+
 if (window.home_lat == null) {
     window.home_lat; //default values
     window.home_lon; //default values
 }
 if (window.distanceElements == null) {
     window.distanceElements = [];
+}
+
+if (window.searchRadius == null) {
+    window.searchRadius = 15;
 }
 
 function initMap() {
@@ -18,6 +27,7 @@ function initMap() {
             window.home_lon = position.coords.longitude;
             updateAllDistanceElements();
             showDistanceCalculations();
+            updateSearchMapCenterToCurrentLocation();
         }, function () {
             //handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -25,6 +35,67 @@ function initMap() {
         // Browser doesn't support Geolocation
         //handleLocationError(false, infoWindow, map.getCenter());
     }   
+
+    //The center location of our map.
+    var centerOfMap = new google.maps.LatLng(window.home_lat, window.home_lon);
+
+    //Map options.
+    var options = {
+        center: centerOfMap, //Set center.
+        zoom: 12 //The zoom value.
+    };
+
+    //Create the map object.
+    window.map = new google.maps.Map(document.getElementById('map'), options);
+
+    //Listen for any clicks on the map.
+    google.maps.event.addListener(map, 'click', function (event) {
+        //Get the location that the user clicked.
+        var clickedLocation = event.latLng;
+        //If the marker hasn't been added.
+        if (marker === false) {
+            //Create the marker.
+            marker = new google.maps.Marker({
+                position: clickedLocation,
+                map: map,
+                draggable: true //make it draggable
+            });
+            //Listen for drag events!
+            google.maps.event.addListener(marker, 'dragend', function (event) {
+                markerLocation();
+            });
+        } else {
+            //Marker has already been added, so just change its location.
+            marker.setPosition(clickedLocation);
+        }
+        //Get the marker's location.
+        markerLocation();
+
+        indexSearch(window.searchRadius)
+    });
+}
+
+
+function markerLocation() {
+    //Get location.
+    var currentLocation = marker.getPosition();
+    //Add lat and lng values to a field that we can save.
+    window.home_lat = currentLocation.lat(); //latitude
+    window.home_lon = currentLocation.lng(); //longitude
+
+    updateAllDistanceElements();
+}
+
+
+
+function mapURLFromCurrentLocation() {
+    //var URLString = "https://www.google.com/maps/embed/v1/view?zoom=17&center=" + window.home_lat + "," + window.home_lon + "&key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges";
+    //return URLString;
+}
+
+function updateSearchMapCenterToCurrentLocation() {
+    //const searchMap = document.getElementById("map");
+    //googleMap.src = mapURLFromCurrentLocation();
 }
 
 function distanceFromCurrentLocationInMiles(lat, lon) {
@@ -77,6 +148,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 function indexSearch(number) {
+    window.searchRadius = number;
     distanceElements.forEach(item => {
         let distance = distanceFromCurrentLocationInMiles(item.Latitude, item.Longitude);
 
@@ -105,3 +177,6 @@ function showDistanceCalculations() {
         element.style.display = "flex";
     });    
 }
+
+//Load the map when the page has finished loading.
+google.maps.event.addDomListener(window, 'load', initMap);
