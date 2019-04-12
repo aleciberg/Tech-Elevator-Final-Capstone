@@ -6,6 +6,7 @@
 if (window.map == null) {
     window.map;
     window.marker = false;
+    window.mapRadius;
 }
 
 if (window.home_lat == null) {
@@ -27,14 +28,15 @@ function initMap() {
             window.home_lon = position.coords.longitude;
             updateAllDistanceElements();
             showDistanceCalculations();
-            updateSearchMapCenterToCurrentLocation();
+            setMarkerToCurrentLocation();
+            setRadiusOnMap();
         }, function () {
             //handleLocationError(true, infoWindow, map.getCenter());
         });
     } else {
         // Browser doesn't support Geolocation
         //handleLocationError(false, infoWindow, map.getCenter());
-    }   
+    }
 
     //The center location of our map.
     var centerOfMap = new google.maps.LatLng(window.home_lat, window.home_lon);
@@ -42,7 +44,7 @@ function initMap() {
     //Map options.
     var options = {
         center: centerOfMap, //Set center.
-        zoom: 12 //The zoom value.
+        zoom: 10 //The zoom value.
     };
 
     //Create the map object.
@@ -52,50 +54,57 @@ function initMap() {
     google.maps.event.addListener(map, 'click', function (event) {
         //Get the location that the user clicked.
         var clickedLocation = event.latLng;
-        //If the marker hasn't been added.
-        if (marker === false) {
-            //Create the marker.
-            marker = new google.maps.Marker({
-                position: clickedLocation,
-                map: map,
-                draggable: true //make it draggable
-            });
-            //Listen for drag events!
-            google.maps.event.addListener(marker, 'dragend', function (event) {
-                markerLocation();
-            });
-        } else {
-            //Marker has already been added, so just change its location.
-            marker.setPosition(clickedLocation);
-        }
-        //Get the marker's location.
-        markerLocation();
+        marker.setPosition(clickedLocation);
 
-        indexSearch(window.searchRadius)
+        setHomeMarkerLatLon();
+        updateAllDistanceElements();
+        indexSearch(window.searchRadius);
+    });
+
+    google.maps.event.addDomListener(window, 'load', initMap);
+
+    showAllLandmarkMarkersOnSearchMap();
+}
+
+function setMarkerToCurrentLocation() {
+    window.marker = new google.maps.Marker({
+        position: { lat: window.home_lat, lng: window.home_lon },
+        map: map,
+        animation: google.maps.Animation.DROP,
+        draggable: false
     });
 }
 
+function setRadiusOnMap() {
+    if (window.mapRadius != null) {
+        window.mapRadius.setMap(null);
+    }    
+    window.mapRadius = new google.maps.Circle({
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35,
+        map: map,
+        center: { lat: window.home_lat, lng: window.home_lon },
+        radius: window.searchRadius * 1609.34
+    });
+}
 
-function markerLocation() {
+function setHomeMarkerLatLon() {
     //Get location.
     var currentLocation = marker.getPosition();
     //Add lat and lng values to a field that we can save.
     window.home_lat = currentLocation.lat(); //latitude
     window.home_lon = currentLocation.lng(); //longitude
-
-    updateAllDistanceElements();
 }
 
-
-
-function mapURLFromCurrentLocation() {
-    //var URLString = "https://www.google.com/maps/embed/v1/view?zoom=17&center=" + window.home_lat + "," + window.home_lon + "&key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges";
-    //return URLString;
-}
-
-function updateSearchMapCenterToCurrentLocation() {
-    //const searchMap = document.getElementById("map");
-    //googleMap.src = mapURLFromCurrentLocation();
+function showAllLandmarkMarkersOnSearchMap() {
+    //new google.maps.Marker({
+    //    position: { lat: home_lat, lng: home_lon },
+    //    map: map,
+    //    draggable: false
+    //});
 }
 
 function distanceFromCurrentLocationInMiles(lat, lon) {
@@ -159,6 +168,8 @@ function indexSearch(number) {
             hideDiv(item.ElementDiv);
         }
     });
+
+    setRadiusOnMap();
 }
 
 function hideDiv(element) {
@@ -175,8 +186,5 @@ function showDistanceCalculations() {
     var divDistanceCalculation = document.getElementsByClassName('indexDistanceCalculation');
     Array.from(divDistanceCalculation).forEach(element => {
         element.style.display = "flex";
-    });    
+    });
 }
-
-//Load the map when the page has finished loading.
-google.maps.event.addDomListener(window, 'load', initMap);
