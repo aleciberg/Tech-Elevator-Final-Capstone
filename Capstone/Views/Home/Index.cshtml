@@ -3,10 +3,22 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<script src="~/js/site.js">
+</script>
+
+
+<div class="search">
+    Show only landmarks within <input id="index_distance_search_box"
+                                      type="number"
+                                      onchange="indexSearch(this.value)"
+                                      onkeyup="indexSearch(this.value)"
+                                      onclick="indexSearch(this.value)" /> miles.
+</div>
 
 @foreach (Landmark landmark in Model)
 {
-    <div class="index_landmark">
+    var landmarkDiv = "landmarkDiv" + landmark.ID;
+    <div class="index_landmark" id="@landmarkDiv">
         @{
             string landmarkImageFile = "/images/landmarks/" + landmark.ImageLocation;
         }
@@ -21,15 +33,22 @@
 
             <p>@landmark.Description</p>
 
+            @{
+                var distanceID = "distanceToLocation" + landmark.ID;
+            }
+            <div class="indexDistanceCalculation" id="@distanceID">
+                @* this will be filled in by the script below *@
+            </div>
+
             <script>
-                distanceBetweenTwoLocations()
+                updateElementDistance(@distanceID, @landmark.Latitude, @landmark.Longitude);
+                addDistanceElement(@landmarkDiv, @distanceID, @landmark.Latitude, @landmark.Longitude);
             </script>
-
-
-            <p>Distance from your location: </p>
-
-
         </div>
-
     </div>
 }
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges&callback=initMap">
+</script>
+

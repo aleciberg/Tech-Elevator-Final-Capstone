@@ -3,17 +3,105 @@
 
 // Write your JavaScript code.
 
-function distanceBetweenTwoLocations(lat1, lon1, lat2, lon2) {
+if (window.home_lat == null) {
+    window.home_lat; //default values
+    window.home_lon; //default values
+}
+if (window.distanceElements == null) {
+    window.distanceElements = [];
+}
+
+function initMap() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            window.home_lat = position.coords.latitude;
+            window.home_lon = position.coords.longitude;
+            updateAllDistanceElements();
+            showDistanceCalculations();
+        }, function () {
+            //handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        //handleLocationError(false, infoWindow, map.getCenter());
+    }   
+}
+
+function distanceFromCurrentLocationInMiles(lat, lon) {
     var R = 6371e3; // metres
-    var φ1 = lat1.toRadians();
-    var φ2 = lat2.toRadians();
-    var Δφ = (lat2 - lat1).toRadians();
-    var Δλ = (lon2 - lon1).toRadians();
+    var φ1 = toRad(window.home_lat);
+    var φ2 = toRad(lat);
+    var Δφ = toRad(lat - window.home_lat);
+    var Δλ = toRad(lon - window.home_lon);
 
     var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
         Math.cos(φ1) * Math.cos(φ2) *
         Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c;
+    return (R * c) * 0.000621371;
+}
+
+function distanceString(distance) {
+    return distance.toFixed(2) + ' miles away';
+}
+
+function updateAllDistanceElements() {
+    distanceElements.forEach(item => {
+        updateElementDistance(item.ElementDiv, item.Element, item.Latitude, item.Longitude)
+    });
+}
+
+function updateElementDistance(elementDiv, element, latitude, longitude) {
+    const distanceToLocationElement = document.getElementById(element.id);
+    let distance = distanceFromCurrentLocationInMiles(latitude, longitude);
+    distanceToLocationElement.innerText = distanceString(distance);
+}
+
+function addDistanceElement(elementDiv, element, latitude, longitude) {
+    var distanceElement = { ElementDiv: elementDiv, Element: element, Latitude: latitude, Longitude: longitude }
+    window.distanceElements.push(distanceElement);
+}
+
+function toRad(Value) {
+    /** Converts numeric degrees to radians */
+    return Value * Math.PI / 180;
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+}
+
+function indexSearch(number) {
+    distanceElements.forEach(item => {
+        let distance = distanceFromCurrentLocationInMiles(item.Latitude, item.Longitude);
+
+        if (distance <= number) {
+            showDiv(item.ElementDiv);
+        }
+        else {
+            hideDiv(item.ElementDiv);
+        }
+    });
+}
+
+function hideDiv(element) {
+    var divElement = document.getElementById(element.id);
+    divElement.style.display = "none";
+}
+
+function showDiv(element) {
+    var divElement = document.getElementById(element.id);
+    divElement.style.display = "flex";
+}
+
+function showDistanceCalculations() {
+    var divDistanceCalculation = document.getElementsByClassName('indexDistanceCalculation');
+    Array.from(divDistanceCalculation).forEach(element => {
+        element.style.display = "flex";
+    });    
 }

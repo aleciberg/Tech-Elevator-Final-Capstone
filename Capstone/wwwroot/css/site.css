@@ -67,7 +67,9 @@ body {
         color: white;
     }
 
-
+#index_distance_search_box {
+    width: 50px;
+}
 
 .index_landmark {
     padding: 20px 40px 40px;
@@ -93,6 +95,9 @@ body {
         text-align: justify;
     }
 
+.indexDistanceCalculation {
+    display: none;
+}
 
 .detail {
     padding: 10px 20px 30px;

@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace Capstone.Models
 {
-    public class User
+    public class LoginViewModel
     {
-        public int ID { get; set; }
-        public string Username { get; set; }
-        public string Role { get; set; }
+        [Required]
+        [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
         public string Password { get; set; }
     }
 }

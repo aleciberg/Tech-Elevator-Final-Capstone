@@ -1,4 +1,16 @@
+USE CityTours;
+GO
+
+ALTER TABLE [dbo].[itinerary] DROP CONSTRAINT [fk_landmark_id];
+
+DROP TABLE [dbo].[landmark];
+DROP TABLE [dbo].[users];
+DROP TABLE [dbo].[itinerary];
+
 USE master;
+GO
+
+ALTER DATABASE CityTours SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
 GO
 
 DROP DATABASE IF EXISTS CityTours;
@@ -36,7 +48,7 @@ CREATE TABLE users (
     username varchar(50) NOT NULL,
     role varchar(50) NOT NULL,
     email varchar(100) NOT NULL,
-    password varchar(20) NOT NULL,
+    password varchar(100) NOT NULL,
 
     CONSTRAINT pk_user_user_id PRIMARY KEY (user_id),
 
@@ -52,7 +64,7 @@ CREATE TABLE itinerary (
 
 SET IDENTITY_INSERT landmark ON;
 
-INSERT INTO landmark (landmark_id, submitter_id, name, category, description, address, city, state, zip, latitude, longitude, hours_of_operation, image_location) VALUES (1, 1, 'Shrum Mound', 'Cemetery', 'Come and see one of the last ancient cone-shaped burial mounds remaining in Columbus, located in one-acre Campbell Park. Shrum Mound is a 20-foot-high and 100-foot-diameter mound built by people of the ancient Adena culture (800 B.C.â€“A.D. 100).', '3141 McKinley Ave', 'Columbus', 'OH', 43204, 39.989985, -83.080465, 'All Daylight Hours', 'Shrum_Mound_4_70000490.jpg');
+INSERT INTO landmark (landmark_id, submitter_id, name, category, description, address, city, state, zip, latitude, longitude, hours_of_operation, image_location) VALUES (1, 1, 'Shrum Mound', 'Cemetery', 'Come and see one of the last ancient cone-shaped burial mounds remaining in Columbus, located in one-acre Campbell Park. Shrum Mound is a 20-foot-high and 100-foot-diameter mound built by people of the ancient Adena culture (800 B.C.–A.D. 100).', '3141 McKinley Ave', 'Columbus', 'OH', 43204, 39.989985, -83.080465, 'All Daylight Hours', 'Shrum_Mound_4_70000490.jpg');
 INSERT INTO landmark (landmark_id, submitter_id, name, category, description, address, city, state, zip, latitude, longitude, hours_of_operation, image_location) VALUES (2, 2, 'Columbus Zoo and Aquarium', 'Zoo', 'Animal & marine life showcase with a hands-on tide pool, reptile lab, kangaroo walkabout & more.', '4850 W Powell Rd', 'Powell', 'OH', 43065, 40.156061, -83.118373, '9:00 AM - 5:00 PM daily', 'columbus-zoo-entrance-5296---g-jones-columbus-zoo-and-aquarium.jpg');
 INSERT INTO landmark (landmark_id, submitter_id, name, category, description, address, city, state, zip, latitude, longitude, hours_of_operation, image_location) VALUES (3, 3, 'Franklin Park Conservatory and Botanical Gardens', 'Garden', 'You can explore a paradise of flora and fauna at the Franklin Park Conservatory and Botanical Gardens. The Conservatory features hundreds of species of plants from around the world in towering glass greenhouses. Walk through the rainforest, desert, orchid collection, and the grand Palm House, where you might spot a wedding in progress on the weekend.', '1777 E. Broad Street', 'Columbus', 'OH', 43203, 39.965358, -82.954723, '10:00 AM - 5:00 PM daily', 'ohio-columbus-franklin-park-conservatory-2.jpg');
 INSERT INTO landmark (landmark_id, submitter_id, name, category, description, address, city, state, zip, latitude, longitude, hours_of_operation, image_location) VALUES (4, 1, 'Franklinton Centennial Boulder', 'Landmark', 'The Franklinton Centennial was held September 14-16, 1897. Events were held between Wheatland and Whitethorne Avenues near the Central Ohio Psychiatric Hospital grounds. The boulder has a fifty-one foot circumference and as tall as the average person. It is located on Eureka Avenue to the walking path on Dry Run Creek.', NULL, 'Columbus', 'OH', 43223, 39.96172, -83.061591, NULL, 'boulder.jpg');
@@ -66,7 +78,7 @@ SET IDENTITY_INSERT users ON;
 INSERT INTO users (user_id, username, role, email, password) VALUES (1, 'aleciberg', 'administrator', 'aleciberg@gmail.com', 'AlecIberg99!');
 INSERT INTO users (user_id, username, role, email, password) VALUES (2, 'davidvanderburgh', 'administrator', 'davidvanderburgh@gmail.com', 'DavidVanderburgh99!');
 INSERT INTO users (user_id, username, role, email, password) VALUES (3, 'kylethomas', 'administrator', 'kylethomas@gmail.com', 'KyleThomas99!');
-INSERT INTO users (user_id, username, role, email, password) VALUES (4, 'mackenziejones', 'administrator', 'mackenziejones@gmail.com', 'MackenzieJones99!');
+INSERT INTO users (user_id, username, role, email, password) VALUES (4, 'mackenziejones', 'visitor', 'mackenziejones@gmail.com', 'MackenzieJones99!');
 
 SET IDENTITY_INSERT users OFF;
 
