@@ -52,19 +52,25 @@ function initMap() {
 
     //Listen for any clicks on the map.
     google.maps.event.addListener(map, 'click', function (event) {
-        //Get the location that the user clicked.
-        var clickedLocation = event.latLng;
-        marker.setPosition(clickedLocation);
-
-        setHomeMarkerLatLon();
-        updateAllDistanceElements();
-        indexSearch(window.searchRadius);
+        updateStartLocationOnMap(event);
     });
 
     google.maps.event.addDomListener(window, 'load', initMap);
 
     showAllLandmarkMarkersOnSearchMap();
 }
+
+function updateStartLocationOnMap(event) {
+    //Get the location that the user clicked.
+    var clickedLocation = event.latLng;
+    marker.setPosition(clickedLocation);
+
+    setHomeMarkerLatLon();
+    updateAllDistanceElements();
+    indexSearch(window.searchRadius);
+    showAllLandmarkMarkersOnSearchMap();
+}
+
 
 function setMarkerToCurrentLocation() {
     window.marker = new google.maps.Marker({
@@ -78,7 +84,7 @@ function setMarkerToCurrentLocation() {
 function setRadiusOnMap() {
     if (window.mapRadius != null) {
         window.mapRadius.setMap(null);
-    }    
+    }
     window.mapRadius = new google.maps.Circle({
         strokeColor: '#FF0000',
         strokeOpacity: 0.8,
@@ -89,6 +95,13 @@ function setRadiusOnMap() {
         center: { lat: window.home_lat, lng: window.home_lon },
         radius: window.searchRadius * 1609.34
     });
+
+    //allow clicking on circle to update selected start point
+    google.maps.event.addListener(window.mapRadius, "click", function (event) {
+        updateStartLocationOnMap(event)
+    });
+
+    showAllLandmarkMarkersOnSearchMap();
 }
 
 function setHomeMarkerLatLon() {
@@ -100,11 +113,22 @@ function setHomeMarkerLatLon() {
 }
 
 function showAllLandmarkMarkersOnSearchMap() {
-    //new google.maps.Marker({
-    //    position: { lat: home_lat, lng: home_lon },
-    //    map: map,
-    //    draggable: false
-    //});
+    distanceElements.forEach(item => {
+        new google.maps.Marker({
+            position: { lat: item.Latitude, lng: item.Longitude },
+            map: map,
+            icon: landmarkIconImage(distanceFromCurrentLocationInMiles(item.Latitude, item.Longitude)),
+            draggable: false
+        });
+    });
+}
+
+function landmarkIconImage(distance) {
+    var result = '/images/landmark_gray.png'
+    if (distance <= window.searchRadius) {
+        result = '/images/landmark.png';
+    }
+    return result;
 }
 
 function distanceFromCurrentLocationInMiles(lat, lon) {
