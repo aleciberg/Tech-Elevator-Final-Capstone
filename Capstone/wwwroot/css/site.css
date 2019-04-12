@@ -88,6 +88,9 @@ body {
         text-align: justify;
     }
 
+.indexDistanceCalculation {
+    display: none;
+}
 
 .detail {
     padding: 10px 20px 30px;

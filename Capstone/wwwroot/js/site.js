@@ -3,8 +3,10 @@
 
 // Write your JavaScript code.
 
-window.home_lat = 39.997863; //default values
-window.home_lon = -83.042820; //default values
+if (window.home_lat == null) {
+    window.home_lat; //default values
+    window.home_lon; //default values
+}
 if (window.distanceElements == null) {
     window.distanceElements = [];
 }
@@ -12,9 +14,10 @@ if (window.distanceElements == null) {
 function initMap() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            home_lat = position.coords.latitude;
-            home_lon = position.coords.longitude;
+            window.home_lat = position.coords.latitude;
+            window.home_lon = position.coords.longitude;
             updateAllDistanceElements();
+            showDistanceCalculations();
         }, function () {
             //handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -26,10 +29,10 @@ function initMap() {
 
 function distanceFromCurrentLocationInMiles(lat, lon) {
     var R = 6371e3; // metres
-    var φ1 = toRad(home_lat);
+    var φ1 = toRad(window.home_lat);
     var φ2 = toRad(lat);
-    var Δφ = toRad(lat - home_lat);
-    var Δλ = toRad(lon - home_lon);
+    var Δφ = toRad(lat - window.home_lat);
+    var Δλ = toRad(lon - window.home_lon);
 
     var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
         Math.cos(φ1) * Math.cos(φ2) *
@@ -45,9 +48,7 @@ function distanceString(distance) {
 
 function updateAllDistanceElements() {
     distanceElements.forEach(item => {
-        const distanceToLocationElement = document.getElementById(item.element.id);
-        let distance = distanceFromCurrentLocationInMiles(item.latitude, item.longitude);
-        distanceToLocationElement.innerText = distanceString(distance);
+        updateElementDistance(item.ElementDiv, item.Element, item.Latitude, item.Longitude)
     });
 }
 
@@ -55,8 +56,6 @@ function updateElementDistance(elementDiv, element, latitude, longitude) {
     const distanceToLocationElement = document.getElementById(element.id);
     let distance = distanceFromCurrentLocationInMiles(latitude, longitude);
     distanceToLocationElement.innerText = distanceString(distance);
-
-    addDistanceElement(elementDiv, element, latitude, longitude);
 }
 
 function addDistanceElement(elementDiv, element, latitude, longitude) {
@@ -88,8 +87,6 @@ function indexSearch(number) {
             hideDiv(item.ElementDiv);
         }
     });
-
-
 }
 
 function hideDiv(element) {
@@ -100,4 +97,11 @@ function hideDiv(element) {
 function showDiv(element) {
     var divElement = document.getElementById(element.id);
     divElement.style.display = "flex";
+}
+
+function showDistanceCalculations() {
+    var divDistanceCalculation = document.getElementsByClassName('indexDistanceCalculation');
+    Array.from(divDistanceCalculation).forEach(element => {
+        element.style.display = "flex";
+    });    
 }
