@@ -71,6 +71,11 @@ body {
     width: 50px;
 }
 
+#map {
+    width: 700px;
+    height: 500px;
+}
+
 .index_landmark {
     padding: 20px 40px 40px;
     display: flex;

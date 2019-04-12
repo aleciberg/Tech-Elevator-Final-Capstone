@@ -3,8 +3,11 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<script src="~/js/site.js">
-</script>
+
+<head>
+    <script src="~/js/site.js">
+    </script>
+</head>
 
 
 <div class="search">
@@ -14,6 +17,12 @@
                                       onkeyup="indexSearch(this.value)"
                                       onclick="indexSearch(this.value)" /> miles.
 </div>
+
+<div id="map">
+    @*<iframe width="940" height="400" frameborder="0"
+        src="https://www.google.com/maps/embed/v1/view?zoom=17&center=0,0&key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges" allowfullscreen></iframe>;*@
+</div>
+
 
 @foreach (Landmark landmark in Model)
 {
@@ -48,7 +57,5 @@
     </div>
 }
 
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges&callback=initMap">
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges&callback=initMap">
 </script>
-

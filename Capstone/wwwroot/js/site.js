@@ -3,6 +3,10 @@
 
 // Write your JavaScript code.
 
+if (window.map == null) {
+    window.map;
+}
+
 if (window.home_lat == null) {
     window.home_lat; //default values
     window.home_lon; //default values
@@ -18,6 +22,7 @@ function initMap() {
             window.home_lon = position.coords.longitude;
             updateAllDistanceElements();
             showDistanceCalculations();
+            updateSearchMapCenterToCurrentLocation();
         }, function () {
             //handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -25,6 +30,31 @@ function initMap() {
         // Browser doesn't support Geolocation
         //handleLocationError(false, infoWindow, map.getCenter());
     }   
+
+    //The center location of our map.
+    var centerOfMap = new google.maps.LatLng(window.home_lat, window.home_lon);
+
+    //Map options.
+    var options = {
+        center: centerOfMap, //Set center.
+        zoom: 4 //The zoom value.
+    };
+
+    //Create the map object.
+    window.map = new google.maps.Map(document.getElementById('map'), options);
+
+}
+
+
+
+function mapURLFromCurrentLocation() {
+    //var URLString = "https://www.google.com/maps/embed/v1/view?zoom=17&center=" + window.home_lat + "," + window.home_lon + "&key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges";
+    //return URLString;
+}
+
+function updateSearchMapCenterToCurrentLocation() {
+    //const searchMap = document.getElementById("map");
+    //googleMap.src = mapURLFromCurrentLocation();
 }
 
 function distanceFromCurrentLocationInMiles(lat, lon) {
@@ -105,3 +135,6 @@ function showDistanceCalculations() {
         element.style.display = "flex";
     });    
 }
+
+//Load the map when the page has finished loading.
+google.maps.event.addDomListener(window, 'load', initMap);
