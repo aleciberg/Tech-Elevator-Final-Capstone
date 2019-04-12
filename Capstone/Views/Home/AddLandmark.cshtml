@@ -1,4 +1,4 @@
-﻿@model Capstone.Models.Landmark
+﻿@model LandmarkUserViewModel
 
 @{
     ViewData["Title"] = "Add Landmark";
@@ -8,66 +8,73 @@
 
 <h4>Landmark</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddLandmark">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserID" class="control-label"></label>
-                <input asp-for="UserID" class="form-control" />
-                <span asp-validation-for="UserID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StreetAddress" class="control-label"></label>
-                <input asp-for="StreetAddress" class="form-control" />
-                <span asp-validation-for="StreetAddress" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="State" class="control-label"></label>
-                <input asp-for="State" class="form-control" />
-                <span asp-validation-for="State" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ZipCode" class="control-label"></label>
-                <input asp-for="ZipCode" class="form-control" />
-                <span asp-validation-for="ZipCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HoursOfOperation" class="control-label"></label>
-                <input asp-for="HoursOfOperation" class="form-control" />
-                <span asp-validation-for="HoursOfOperation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageLocation" class="control-label"></label>
-                <input asp-for="ImageLocation" class="form-control" />
-                <span asp-validation-for="ImageLocation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add New Landmark" class="btn btn-default" />
-            </div>
-        </form>
+@if (Model != null && Model.User.Role.ToString().ToUpper() == "administrator".ToUpper())
+{
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="AddLandmark">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="@Model.Landmark.UserID" class="control-label"></label>
+                    <input asp-for="@Model.Landmark.UserID" class="form-control" />
+                    <span asp-validation-for="@Model.Landmark.UserID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Landmark.Name" class="control-label"></label>
+                    <input asp-for="@Model.Landmark.Name" class="form-control" />
+                    <span asp-validation-for="@Model.Landmark.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Landmark.Category" class="control-label"></label>
+                    <input asp-for="@Model.Landmark.Category" class="form-control" />
+                    <span asp-validation-for="@Model.Landmark.Category" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Landmark.Description" class="control-label"></label>
+                    <input asp-for="@Model.Landmark.Description" class="form-control" />
+                    <span asp-validation-for="@Model.Landmark.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Landmark.StreetAddress" class="control-label"></label>
+                    <input asp-for="@Model.Landmark.StreetAddress" class="form-control" />
+                    <span asp-validation-for="@Model.Landmark.StreetAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Landmark.City" class="control-label"></label>
+                    <input asp-for="@Model.Landmark.City" class="form-control" />
+                    <span asp-validation-for="@Model.Landmark.City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Landmark.State" class="control-label"></label>
+                    <input asp-for="@Model.Landmark.State" class="form-control" />
+                    <span asp-validation-for="@Model.Landmark.State" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Landmark.ZipCode" class="control-label"></label>
+                    <input asp-for="@Model.Landmark.ZipCode" class="form-control" />
+                    <span asp-validation-for="@Model.Landmark.ZipCode" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Landmark.HoursOfOperation" class="control-label"></label>
+                    <input asp-for="@Model.Landmark.HoursOfOperation" class="form-control" />
+                    <span asp-validation-for="@Model.Landmark.HoursOfOperation" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Landmark.ImageLocation" class="control-label"></label>
+                    <input asp-for="@Model.Landmark.ImageLocation" class="form-control" />
+                    <span asp-validation-for="@Model.Landmark.ImageLocation" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add New Landmark" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+}
+else
+{
+    <div>You must log in as an administrator to add landmarks.</div>
+}
 
 <div>
     <a asp-action="Index">Back to List</a>

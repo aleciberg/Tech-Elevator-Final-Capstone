@@ -24,12 +24,12 @@ namespace Capstone.Providers.Auth
 
         public bool IsLoggedIn => !String.IsNullOrEmpty(Session.GetString(SessionKey));
 
-        public bool SignIn(string username, string password)
+        public bool SignIn(string email, string password)
         {
-            var user = usersDAL.GetUser(username);
-            var hashProvider = new HashProvider();
+            var user = usersDAL.GetUser(email);
+            //var hashProvider = new HashProvider();
 
-            if (user != null && hashProvider.VerifyPassword(user.Password, password))
+            if (user != null && email == user.Email && password == user.Password)
             {
                 Session.SetString(SessionKey, user.Username);
                 return true;
@@ -45,11 +45,11 @@ namespace Capstone.Providers.Auth
 
         public User GetCurrentUser()
         {
-            var username = Session.GetString(SessionKey);
+            var email = Session.GetString(SessionKey);
 
-            if (!String.IsNullOrEmpty(username))
+            if (!String.IsNullOrEmpty(email))
             {
-                return usersDAL.GetUser(username);
+                return usersDAL.GetUser(email);
             }
 
             return null;
@@ -58,19 +58,19 @@ namespace Capstone.Providers.Auth
         public int Register(string username, string password, string email, string role)
         {
             int result = 0;
-            var hashProvider = new HashProvider();
-            var passwordHash = hashProvider.HashPassword(password);
+            //var hashProvider = new HashProvider();
+            //var passwordHash = hashProvider.HashPassword(password);
 
             var user = new User
             {
                 Username = username,
-                Password = passwordHash.Password,
+                Password = password,
                 Email = email,
                 Role = role
             };
 
             result = usersDAL.AddUser(user);
-            Session.SetString(SessionKey, user.Username);
+            Session.SetString(SessionKey, user.Email);
             return result;
         }
 

@@ -12,7 +12,7 @@ namespace Capstone.DAL
     {
         private string connectionString;
         private const string SQL_AddUser = @"INSERT INTO users (username, role, email, password) VALUES (@username, @role, @email, @password); SELECT CAST(SCOPE_IDENTITY() as int);";
-        private const string SQL_GetUser = @"SELECT * FROM users WHERE username = @username";
+        private const string SQL_GetUser = @"SELECT * FROM users WHERE email = @email";
 
         public UsersSqlDAL(string dbConnectionString)
         {
@@ -47,7 +47,7 @@ namespace Capstone.DAL
             return userID;
         }
 
-        public User GetUser(string username)
+        public User GetUser(string email)
         {
             User user = new User();
             try
@@ -56,7 +56,7 @@ namespace Capstone.DAL
                 {
                     connection.Open();
                     SqlCommand cmd = new SqlCommand(SQL_GetUser, connection);
-                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@email", email);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
