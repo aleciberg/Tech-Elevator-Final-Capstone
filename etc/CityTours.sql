@@ -2,15 +2,18 @@ USE CityTours;
 GO
 
 ALTER TABLE [dbo].[itinerary] DROP CONSTRAINT [fk_landmark_id];
+ALTER TABLE [dbo].[itinerary_user] DROP CONSTRAINT [fk_itinerary_id];
+ALTER TABLE [dbo].[itinerary_user] DROP CONSTRAINT [fk_user_id];
 
 DROP TABLE [dbo].[landmark];
 DROP TABLE [dbo].[users];
 DROP TABLE [dbo].[itinerary];
+DROP TABLE [dbo].[itinerary_user];
 
 USE master;
 GO
 
-ALTER DATABASE CityTours SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+ALTER DATABASE CityTours SET MULTI_USER WITH ROLLBACK IMMEDIATE;
 GO
 
 DROP DATABASE IF EXISTS CityTours;
@@ -37,7 +40,7 @@ CREATE TABLE landmark (
     latitude float NOT NULL,
     longitude float NOT NULL,
     hours_of_operation varchar(100),
-    image_location varchar(300),
+    image_location varchar(500),
 
     CONSTRAINT pk_landmark_landmark_id PRIMARY KEY (landmark_id),
 
@@ -59,7 +62,16 @@ CREATE TABLE itinerary (
     landmark_id integer NOT NULL,
     visit_order integer NOT NULL,
 
+	CONSTRAINT pk_itinerary_itinerary_id PRIMARY KEY (itinerary_id),
     CONSTRAINT fk_landmark_id FOREIGN KEY (landmark_id) REFERENCES landmark(landmark_id),
+);
+
+CREATE TABLE itinerary_user (
+    itinerary_id integer NOT NULL,
+    user_id integer NOT NULL,
+
+    CONSTRAINT fk_itinerary_id FOREIGN KEY (itinerary_id) REFERENCES itinerary(itinerary_id),
+	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
 );
 
 SET IDENTITY_INSERT landmark ON;
@@ -89,5 +101,9 @@ INSERT INTO itinerary (itinerary_id, landmark_id, visit_order) VALUES (2, 3, 2);
 INSERT INTO itinerary (itinerary_id, landmark_id, visit_order) VALUES (3, 2, 1);
 INSERT INTO itinerary (itinerary_id, landmark_id, visit_order) VALUES (3, 4, 2);
 INSERT INTO itinerary (itinerary_id, landmark_id, visit_order) VALUES (3, 5, 3);
+
+INSERT INTO itinerary_user (itinerary_id, user_id) VALUES (1, 2);
+INSERT INTO itinerary_user (itinerary_id, user_id) VALUES (2, 4);
+INSERT INTO itinerary_user (itinerary_id, user_id) VALUES (3, 1);
 
 COMMIT;
