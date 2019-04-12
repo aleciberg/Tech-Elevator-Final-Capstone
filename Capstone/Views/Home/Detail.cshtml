@@ -3,45 +3,6 @@
 @{
     ViewData["Title"] = "Detail";
 }
-
-<div class="detail">
-    <img id="detailImage" src="~/images/landmarks/@Model.ImageLocation" />
-
-    <div id="detailRightBox">
-
-        <h2>Landmark information:</h2>
-        <ul class="list_facts">
-            <li>
-                Category: @Model.Category
-            </li>
-            <li>
-                Location: @Model.StreetAddress @Model.City, @Model.State @Model.ZipCode
-            </li>
-            <li>
-                Hours of operations: @Model.HoursOfOperation
-            </li>
-
-        </ul>
-        <iframe width="400" height="300" frameborder="0" style="border:0"
-                src="https://www.google.com/maps/embed/v1/view?zoom=17&center=@Model.Latitude,@Model.Longitude&key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges" allowfullscreen></iframe>
-
-    </div>
-</div>
-<section>
-    <div id="map"></div>
-    <script>
-
-        // This example displays a marker at the center of Australia.
-        // When the user clicks the marker, an info window opens.
-
-        function initMap() {
-            var uluru = { lat: -25.363, lng: 131.044 };
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
-                center: uluru
-            });
-    </script>
-</section>
 <h1 style="text-align:center">@Model.Name</h1>
 
 <div class="detail">
