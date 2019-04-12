@@ -71,10 +71,16 @@ function initMap() {
         //Get the marker's location.
         markerLocation();
 
-        indexSearch(window.searchRadius)
+        indexSearch(window.searchRadius);
+    });
+    google.maps.event.addDomListener(window, 'load', initMap);
+
+    marker = new google.maps.Marker({
+        position: { lat: home_lat, lng: home_lon},
+        map: map,
+        draggable: true
     });
 }
-
 
 function markerLocation() {
     //Get location.
@@ -85,8 +91,6 @@ function markerLocation() {
 
     updateAllDistanceElements();
 }
-
-
 
 function mapURLFromCurrentLocation() {
     //var URLString = "https://www.google.com/maps/embed/v1/view?zoom=17&center=" + window.home_lat + "," + window.home_lon + "&key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges";
@@ -177,6 +181,3 @@ function showDistanceCalculations() {
         element.style.display = "flex";
     });    
 }
-
-//Load the map when the page has finished loading.
-google.maps.event.addDomListener(window, 'load', initMap);
