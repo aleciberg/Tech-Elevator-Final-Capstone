@@ -44,10 +44,7 @@
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-area="" asp-controller="Home" asp-action="AddLandmark">Add Landmark</a></li>
             </ul>
-            <ul class="loginRegister">
-                <li><a asp-area="" asp-controller="Home" asp-action="Register">Register</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="Login">Login</a></li>
-            </ul>
+            @await Component.InvokeAsync("NavBar")
         </div>
     </nav>
 

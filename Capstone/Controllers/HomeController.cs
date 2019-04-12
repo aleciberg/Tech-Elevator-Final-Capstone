@@ -60,6 +60,9 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddLandmark(Landmark landmark)
         {
+
+            //TODO: Add user to model before passing
+
             SetSession();
             if (!ModelState.IsValid)
             {
@@ -129,6 +132,14 @@ namespace Capstone.Controllers
             }
 
             return View(lvm);
+        }
+
+        [HttpGet]
+        public IActionResult LogOff()
+        {
+            authProvider.LogOff();
+            
+            return RedirectToAction("Index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
