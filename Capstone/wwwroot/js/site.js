@@ -101,6 +101,7 @@ function setRadiusOnMap() {
         updateStartLocationOnMap(event)
     });
 
+
     showAllLandmarkMarkersOnSearchMap();
 }
 
