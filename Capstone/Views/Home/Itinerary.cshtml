@@ -1,26 +1,29 @@
-﻿@model List<Landmark>
-
+﻿@model Itinerary
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Itinerary";
 }
 
-<div class="search">
-    Show only landmarks within <input id="index_distance_search_box"
-                                      type="number"
-                                      onchange="indexSearch(this.value)"
-                                      onkeyup="indexSearch(this.value)"
-                                      onclick="indexSearch(this.value)" 
-                                      value="15"/> miles.
+<h2>Itinerary</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RenameItinerary">
+            <div class="col-md-6" style="display: block">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="@Model.Name" class="control-label"></label>
+                    <input asp-for="@Model.Name" class="form-control" />
+                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Rename" class="btn btn-default" />
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
-<div id="map">
-</div>
-
-<p>Click the map to change your starting location.</p>
-
-<a asp-controller="Home" asp-action="Itinerary"><div>Create Itinerary</div></a>
-
-@foreach (Landmark landmark in Model)
+@foreach (Landmark landmark in Model.Landmarks.Values)
 {
     var landmarkDiv = "landmarkDiv" + landmark.ID;
     <div class="index_landmark" id="@landmarkDiv">
@@ -38,12 +41,15 @@
 
             <p>@landmark.Description</p>
 
+            <div><p>Here</p></div>
+
             @{
                 var distanceID = "distanceToLocation" + landmark.ID;
             }
             <div class="indexDistanceCalculation" id="@distanceID">
                 @* this will be filled in by the script below *@
             </div>
+
 
             <script>
                 updateElementDistance(@landmarkDiv, @distanceID, @landmark.Latitude, @landmark.Longitude);
@@ -52,4 +58,3 @@
         </div>
     </div>
 }
-

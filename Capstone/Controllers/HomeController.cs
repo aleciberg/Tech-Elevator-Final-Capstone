@@ -157,8 +157,35 @@ namespace Capstone.Controllers
         public IActionResult LogOff()
         {
             authProvider.LogOff();
-            
+
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult Itinerary()
+        {
+            Itinerary itinerary = new Itinerary();
+            List<Landmark> landmarks = landmarkDAL.GetAllLandmarks();
+            Dictionary<int, Landmark> keyValuePairs = new Dictionary<int, Landmark>();
+
+            for (int i = 0; i < landmarks.Count; i++)
+            {
+                keyValuePairs[i] = landmarks[i];
+            }
+
+            itinerary.Landmarks = keyValuePairs;
+            
+            return View(itinerary);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RenameItinerary(Itinerary itinerary, string name)
+        {
+            Itinerary newItinerary = itinerary;
+            newItinerary.Name = name;
+
+            return RedirectToAction("Itinerary", newItinerary);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

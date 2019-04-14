@@ -1,8 +1,8 @@
 USE CityTours;
 GO
 
-ALTER TABLE [dbo].[itinerary] DROP CONSTRAINT [fk_landmark_id];
-ALTER TABLE [dbo].[itinerary_user] DROP CONSTRAINT [fk_itinerary_id];
+--ALTER TABLE [dbo].[itinerary] DROP CONSTRAINT [fk_landmark_id];
+--ALTER TABLE [dbo].[itinerary_user] DROP CONSTRAINT [fk_itinerary_id];
 ALTER TABLE [dbo].[itinerary_user] DROP CONSTRAINT [fk_user_id];
 
 DROP TABLE [dbo].[landmark];
@@ -62,7 +62,7 @@ CREATE TABLE itinerary (
     landmark_id integer NOT NULL,
     visit_order integer NOT NULL,
 
-	CONSTRAINT pk_itinerary_itinerary_id PRIMARY KEY (itinerary_id),
+	--CONSTRAINT pk_itinerary_itinerary_id PRIMARY KEY (itinerary_id),
     CONSTRAINT fk_landmark_id FOREIGN KEY (landmark_id) REFERENCES landmark(landmark_id),
 );
 
@@ -70,7 +70,7 @@ CREATE TABLE itinerary_user (
     itinerary_id integer NOT NULL,
     user_id integer NOT NULL,
 
-    CONSTRAINT fk_itinerary_id FOREIGN KEY (itinerary_id) REFERENCES itinerary(itinerary_id),
+    --CONSTRAINT fk_itinerary_id FOREIGN KEY (itinerary_id) REFERENCES itinerary(itinerary_id),
 	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
 );
 
