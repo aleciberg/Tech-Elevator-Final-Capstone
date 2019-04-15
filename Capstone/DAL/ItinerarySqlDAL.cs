@@ -16,6 +16,7 @@ namespace Capstone.DAL
             "itinerary.itinerary_id = itinerary_name.itinerary_id JOIN itinerary_user " +
             "ON itinerary.itinerary_id = itinerary_user.itinerary_id JOIN users ON users.user_id = itinerary_user.user_id " + 
             "WHERE itinerary.itinerary_id = @itinerary_id";
+        private const string SQL_UpdateItinerary = "";
         private const string SQL_GetMaxItineraryId = "SELECT MAX(itinerary_id) FROM itinerary";
         private const string SQL_CreateItinerary = "INSERT INTO itinerary (itinerary_id) VALUES (@itinerary_id); INSERT INTO itinerary_name (itinerary_id, itinerary_name) VALUES (@itinerary_id, @itinerary_name);";
         private const string SQL_GetAllLandmarksByItineraryId = "SELECT * FROM landmark JOIN itinerary ON itinerary.landmark_id = landmark.landmark_id WHERE itinerary.itinerary_id = @itinerary_id ORDER BY visit_order";
@@ -41,9 +42,9 @@ namespace Capstone.DAL
                     {
                         ID = Convert.ToInt32(reader["itinerary_id"]),
                         Name = Convert.ToString(reader["itinerary_name"]),
-                        UserEmail = Convert.ToString(reader["email"]) //TODO: need starting point
-                        //StartingLatitude = Convert.ToDecimal(reader["start_lat"]),
-                        //StartingLongitude = Convert.ToDecimal(reader["start_lon"])
+                        UserEmail = Convert.ToString(reader["email"]),
+                        StartingLatitude = Convert.ToDecimal(reader["start_lat"]),
+                        StartingLongitude = Convert.ToDecimal(reader["start_lon"])
                     };
                 }
 
@@ -53,11 +54,18 @@ namespace Capstone.DAL
             return itinerary;
         }
 
-        public void UpdateItinerary(Itinerary itinerary)
+        public void UpdateItineraryName(int itineraryId, string newItineraryName)
         {
-            //SQL updates table based on itinerary.ID
 
+        }
 
+        public void UpdateItineraryStartingLocation(int itineraryId, decimal startingLatitude, decimal startingLongitude)
+        {
+
+        }
+
+        public void UpdateItineraryLandmarks(int itineraryId, List<Landmark> orderedLandmarks)
+        {
 
         }
 
