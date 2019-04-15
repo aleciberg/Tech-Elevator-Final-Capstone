@@ -8,8 +8,11 @@
 <p>@Model.Name</p>
 <p>@Model.ID</p>
 <p>@Model.UserEmail</p>
+<p>@Model.StartingLatitude</p>
+<p>@Model.StartingLongitude</p>
 
 @foreach (Landmark landmark in Model.LandmarksOrderedByVisitOrder)
 {
     <div>@landmark.Name</div>
 }
+
