@@ -17,14 +17,16 @@ namespace Capstone.Controllers
         private readonly ILandmarkSqlDAL landmarkDAL;
         private readonly IAuthProvider authProvider;
         private readonly IUsersDAL usersDAL;
+        private readonly IItineraryDAL itineraryDAL;
         public static string SessionKey = "Auth_User";
 
 
-        public HomeController(ILandmarkSqlDAL landmarkDAL, IAuthProvider authProvider, IUsersDAL usersDAL)
+        public HomeController(ILandmarkSqlDAL landmarkDAL, IAuthProvider authProvider, IUsersDAL usersDAL, IItineraryDAL itineraryDAL)
         {
             this.landmarkDAL = landmarkDAL;
             this.authProvider = authProvider;
             this.usersDAL = usersDAL;
+            this.itineraryDAL = itineraryDAL;
         }
 
         private void SetSession()
@@ -162,20 +164,32 @@ namespace Capstone.Controllers
         }
 
         [HttpGet]
-        public IActionResult Itinerary()
+        public IActionResult CreateItinerary()
         {
-            Itinerary itinerary = new Itinerary();
-            List<Landmark> landmarks = landmarkDAL.GetAllLandmarks();
-            Dictionary<int, Landmark> keyValuePairs = new Dictionary<int, Landmark>();
+            return View();
+        }
 
-            for (int i = 0; i < landmarks.Count; i++)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateItinerary(string name)
+        {
+            Itinerary itinerary = new Itinerary()
             {
-                keyValuePairs[i] = landmarks[i];
-            }
+                Name = name,
+                ID = itineraryDAL.GetNextItineraryId()
+            };
+            itinerary.RemainingLandmarks = itineraryDAL.GetAllLandmarksByItineraryId(itinerary.ID);
 
-            itinerary.Landmarks = keyValuePairs;
-            
-            return View(itinerary);
+            int result = itineraryDAL.CreateItinerary(itinerary.ID, itinerary.Name);
+
+            return RedirectToAction("ItineraryDetail", itinerary.ID);
+        }
+
+        [HttpGet]
+        public IActionResult ItineraryDetail(int itineraryId)
+        {
+
+            return View();
         }
 
         [HttpPost]

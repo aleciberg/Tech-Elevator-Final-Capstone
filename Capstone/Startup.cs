@@ -46,6 +46,7 @@ namespace Capstone
 
             services.AddScoped<ILandmarkSqlDAL, LandmarkSqlDAL>(p => new LandmarkSqlDAL(connectionString));
             services.AddScoped<IUsersDAL, UsersSqlDAL>(p => new UsersSqlDAL(connectionString));
+            services.AddScoped<IItineraryDAL, ItinerarySqlDAL>(p => new ItinerarySqlDAL(connectionString));
             services.AddScoped<IAuthProvider, SessionAuthProvider>();
 
             // Add CORS policy
