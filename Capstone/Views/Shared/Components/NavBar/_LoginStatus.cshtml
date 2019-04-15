@@ -6,15 +6,11 @@
 @if (Model == null)
 
 {
-    <ul class="loginRegister">
-        <li><a asp-area="" asp-controller="Home" asp-action="Register">Register</a></li>
-        <li><a asp-area="" asp-controller="Home" asp-action="Login">Login</a></li>
-    </ul>
+    <a asp-area="" id="loginRegister" asp-controller="Home" asp-action="Register">Register</a>
+    <a asp-area="" id="loginRegister" asp-controller="Home" asp-action="Login">Login</a>
 }
 else
 {
-    <ul class="loginRegister">
-        <li><a asp-area="" asp-controller="Home" asp-action="Index">Welcome!</a></li>
-        <li><a asp-area="" asp-controller="Home" asp-action="Logoff">Logout</a></li>
-    </ul>
+    <a asp-area="" id="loginRegister" asp-controller="Home" asp-action="Index">Welcome!</a>
+    <a asp-area="" id="loginRegister" asp-controller="Home" asp-action="Logoff">Logout</a>
 }

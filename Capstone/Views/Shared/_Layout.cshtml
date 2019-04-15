@@ -6,22 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Capstone</title>
     <link rel="stylesheet" type="text/css" href="~/css/site.css" />
-    <style>
-        .navbarTwo {
-            background-color: #bb0000;
-            min-height: 480px;
-        }
-
-        .navbar-brand {
-            font-size: large;
-            color: grey;
-        }
-
-        .navbar-collapse {
-            display: block;
-            margin-bottom: 0px;
-        }
-    </style>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -38,18 +22,15 @@
     </script>
 </head>
 <body>
-    <nav class="navContainer">
-        <div class="navLogo">
-            <a asp-area="" asp-controller="Home" asp-action="Index">CityTours</a>
-        </div>
-        <div class="navLink sticky" id="stickyNavbar">
-            <ul class="navFun">
-                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="AddLandmark">Add Landmark</a></li>
-            </ul>
-            @await Component.InvokeAsync("NavBar")
-        </div>
-    </nav>
+    <div class="header">
+        <h2 id="headerText">CityTours</h2>
+    </div>
+
+    <div id="navbar">
+        <a asp-controller="Home" asp-action="Index">Home</a>
+        <a asp-controller="Home" asp-action="AddLandmark">Add Landmark</a>
+        @await Component.InvokeAsync("NavBar")
+    </div>
 
     <div class="container body-content">
         @RenderBody()
