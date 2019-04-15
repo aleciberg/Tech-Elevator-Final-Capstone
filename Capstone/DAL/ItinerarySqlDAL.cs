@@ -12,7 +12,7 @@ namespace Capstone.DAL
     {
         private string connectionString;
 
-        private const string SQL_GetNextItineraryId = "SELECT MAX(itinerary_id) FROM itinerary";
+        private const string SQL_GetMaxItineraryId = "SELECT MAX(itinerary_id) FROM itinerary";
 
         private const string SQL_CreateItinerary = "INSERT INTO itinerary (itinerary_id) VALUES (@itinerary_id); INSERT INTO itinerary_name (itinerary_id, itinerary_name) VALUES (@itinerary_id, @itinerary_name);";
 
@@ -30,7 +30,7 @@ namespace Capstone.DAL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand(SQL_GetNextItineraryId, connection);
+                SqlCommand command = new SqlCommand(SQL_GetMaxItineraryId, connection);
                 result = (int)command.ExecuteScalar() + 1;
             }
 

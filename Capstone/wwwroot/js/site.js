@@ -68,7 +68,7 @@ function updateStartLocationOnMap(event) {
     setHomeMarkerLatLon();
     updateAllDistanceElements();
     indexSearch(window.searchRadius);
-    showAllLandmarkMarkersOnSearchMap();
+    //showAllLandmarkMarkersOnSearchMap();
 }
 
 
@@ -100,9 +100,6 @@ function setRadiusOnMap() {
     google.maps.event.addListener(window.mapRadius, "click", function (event) {
         updateStartLocationOnMap(event)
     });
-
-
-    showAllLandmarkMarkersOnSearchMap();
 }
 
 function setHomeMarkerLatLon() {
