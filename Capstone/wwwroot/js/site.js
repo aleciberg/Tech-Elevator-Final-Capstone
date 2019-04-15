@@ -75,7 +75,7 @@ function updateStartLocationOnMap(event) {
 function setMarkerToCurrentLocation() {
     window.marker = new google.maps.Marker({
         position: { lat: window.home_lat, lng: window.home_lon },
-        map: map,
+        map: window.map,
         animation: google.maps.Animation.DROP,
         draggable: false
     });
@@ -91,7 +91,7 @@ function setRadiusOnMap() {
         strokeWeight: 2,
         fillColor: '#FF0000',
         fillOpacity: 0.35,
-        map: map,
+        map: window.map,
         center: { lat: window.home_lat, lng: window.home_lon },
         radius: window.searchRadius * 1609.34
     });
@@ -214,14 +214,33 @@ function showDistanceCalculations() {
 //NavBar Things
 window.onscroll = function () { myFunction() };
 
-var navbar = document.getElementById("navbar");
-
-var sticky = navbar.offsetTop;
 
 function myFunction() {
+    var navbar = document.getElementById("navbar");
+    var sticky = navbar.offsetTop;
     if (window.pageYOffset >= sticky) {
         navbar.classList.add("sticky")
     } else {
         navbar.classList.remove("sticky");
     }
 }
+
+function initializeSortableLandmarks() {
+    var itineraryLandmarks = document.getElementById('itineraryLandmarks');
+    new Sortable(itineraryLandmarks, {
+        group: "landmarks",
+        handle: ".my-handle",
+        draggable: ".item",
+        ghostClass: "sortable-ghost",
+        onAdd: function (evt) {
+            var itemEl = evt.item;
+        },
+        onUpdate: function (evt) {
+            var itemEl = evt.item; // the current dragged HTMLElement
+        },
+        onRemove: function (evt) {
+            var itemEl = evt.item;
+        }
+    });
+}
+

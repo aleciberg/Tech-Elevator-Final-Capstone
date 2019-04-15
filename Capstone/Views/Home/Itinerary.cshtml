@@ -5,14 +5,20 @@
 
 <h2>Itinerary</h2>
 
-<p>@Model.Name</p>
+<p>Name of itinerary: @Model.Name</p>
 <p>@Model.ID</p>
 <p>@Model.UserEmail</p>
 <p>@Model.StartingLatitude</p>
 <p>@Model.StartingLongitude</p>
 
-@foreach (Landmark landmark in Model.LandmarksOrderedByVisitOrder)
-{
-    <div>@landmark.Name</div>
-}
 
+<ul id="itineraryLandmarks">
+    @foreach (Landmark landmark in Model.LandmarksOrderedByVisitOrder)
+    {
+        <li>@landmark.Name</li>
+    }
+</ul>
+
+@*<script src="~/js/Sortable/Sortable.js">
+    initializeSortableLandmarks();
+</script>*@
