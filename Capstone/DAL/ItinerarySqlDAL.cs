@@ -13,15 +13,40 @@ namespace Capstone.DAL
         private string connectionString;
 
         private const string SQL_GetMaxItineraryId = "SELECT MAX(itinerary_id) FROM itinerary";
-
         private const string SQL_CreateItinerary = "INSERT INTO itinerary (itinerary_id) VALUES (@itinerary_id); INSERT INTO itinerary_name (itinerary_id, itinerary_name) VALUES (@itinerary_id, @itinerary_name);";
-
         private const string SQL_GetAllLandmarksByItineraryId = "SELECT * FROM landmark JOIN itinerary ON itinerary.landmark_id = landmark.landmark_id WHERE itinerary.itinerary_id = @itinerary_id ORDER BY visit_order";
 
         public ItinerarySqlDAL(string dbConnectionString)
         {
             connectionString = dbConnectionString;
         }
+
+        public Itinerary GetItineraryById(int itineraryId)
+        {
+            Itinerary itinerary = new Itinerary();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("", connection);
+                command.Parameters.AddWithValue("@itinerary_id", itineraryId);
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    itinerary = new Itinerary()
+                    {
+                        ID = Convert.ToInt32(reader["id"]),
+                        Name = Convert.ToString(reader["name"]),
+                        UserId = Convert.ToInt32(reader["userId"])
+                    };
+                }
+
+                itinerary.LandmarksOrderedByVisitOrder = GetAllLandmarksByItineraryIdOrderedByVisitOrder(itineraryId);
+            }
+
+            return itinerary;
+        }
+
 
         public int GetNextItineraryId()
         {
@@ -53,7 +78,7 @@ namespace Capstone.DAL
             return result;
         }
 
-        public List<Landmark> GetAllLandmarksByItineraryId(int itineraryId)
+        public List<Landmark> GetAllLandmarksByItineraryIdOrderedByVisitOrder(int itineraryId)
         {
             List<Landmark> landmarks = new List<Landmark>();
 

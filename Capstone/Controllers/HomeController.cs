@@ -74,7 +74,6 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddLandmark(Landmark landmark)
         {
-
             //TODO: Add user to model before passing
             User user = authProvider.GetCurrentUser();
 
@@ -182,13 +181,15 @@ namespace Capstone.Controllers
 
             int result = itineraryDAL.CreateItinerary(itinerary.ID, itinerary.Name);
 
-            return RedirectToAction("ItineraryDetail", itinerary.ID);
+            return RedirectToAction("Itinerary", itinerary.ID);
         }
 
         [HttpGet]
-        public IActionResult ItineraryDetail(int itineraryId)
+        public IActionResult Itinerary(int itineraryId)
         {
-            return View();
+            Itinerary itinerary = itineraryDAL.GetItineraryById(itineraryId);
+
+            return View(itinerary);
         }
 
         [HttpPost]
