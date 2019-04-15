@@ -6,14 +6,49 @@ body {
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    /*padding-top: 500px;*/
 }
 
+section {
+    margin-bottom: 50px;
+}
 
-.navContainer {
-    position: relative;
-    min-height: 150px;
+/*NAVBAR CSS*/
+
+.header {
     background-color: #bb0000;
-    border: 5px solid grey;
+    padding: 30px;
+    text-align: center;
+}
+
+#headerText {
+    font-size: 62px;
+    color: white;
+}
+
+#navbar {
+    overflow: hidden;
+    background-color: #bb0000;
+    z-index: 9999;
+}
+
+    #navbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+        #navbar a:hover {
+            background-color: grey;
+            color: white;
+        }
+
+#loginRegister {
+    float: right !important;
 }
 
 .sticky {
@@ -22,50 +57,11 @@ body {
     width: 100%;
 }
 
-.navLink {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-
-    .navLink > ul > li {
-        display: inline;
-        padding: 10px;
+    .sticky + .content {
+        padding-top: 60px;
     }
 
-        .navLink > ul > li > a {
-            font-size: 18px;
-            text-decoration: none;
-            color: white;
-        }
-
-
-    .navLink > ul {
-        padding-left: 5px;
-    }
-
-    .navLink > .loginRegister {
-        display: inline-block;
-        float: right;
-    }
-
-    .navLink > .navFun {
-        display: inline-block;
-        float: left;
-    }
-
-.navLogo {
-    display: block;
-    text-align:center;
-    height: 85%;
-    padding: 10px;
-}
-
-    .navLogo > a {
-        font-size: 62px;
-        text-decoration: none;
-        color: white;
-    }
+/*MAP CSS*/
 
 #index_distance_search_box {
     width: 50px;

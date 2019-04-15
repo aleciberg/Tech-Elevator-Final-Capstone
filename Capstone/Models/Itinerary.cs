@@ -8,8 +8,10 @@ namespace Capstone.Models
     public class Itinerary
     {
         public int ID { get; set; }
-        public int UserId { get; set; }
+        public string UserEmail { get; set; }
         public string Name { get; set; }
-        public Dictionary<int, Landmark> LandmarkVisitOrder { get; set; }
+        public decimal StartingLatitude { get; set; }
+        public decimal StartingLongitude { get; set; }
+        public List<Landmark> LandmarksOrderedByVisitOrder { get; set; }
     }
 }

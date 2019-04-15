@@ -8,8 +8,9 @@ namespace Capstone.DAL.Interfaces
 {
     public interface IItineraryDAL
     {
+        Itinerary GetItineraryById(int id);
         int GetNextItineraryId();
         int CreateItinerary(int id, string name);
-        List<Landmark> GetAllLandmarksByItineraryId(int itineraryId);
+        List<Landmark> GetAllLandmarksByItineraryIdOrderedByVisitOrder(int itineraryId);
     }
 }
