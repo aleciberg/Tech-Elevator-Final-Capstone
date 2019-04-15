@@ -178,7 +178,7 @@ namespace Capstone.Controllers
                 Name = name,
                 ID = itineraryDAL.GetNextItineraryId()
             };
-            itinerary.RemainingLandmarks = itineraryDAL.GetAllLandmarksByItineraryId(itinerary.ID);
+            //itinerary.RemainingLandmarks = itineraryDAL.GetAllLandmarksByItineraryId(itinerary.ID);
 
             int result = itineraryDAL.CreateItinerary(itinerary.ID, itinerary.Name);
 
@@ -188,7 +188,6 @@ namespace Capstone.Controllers
         [HttpGet]
         public IActionResult ItineraryDetail(int itineraryId)
         {
-
             return View();
         }
 

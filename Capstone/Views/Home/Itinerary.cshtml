@@ -23,7 +23,7 @@
     </div>
 </div>
 
-@foreach (Landmark landmark in Model.Landmarks.Values)
+@*@foreach (KeyValuePair<int, Landmark> kvp in Model.LandmarkVisitOrder)
 {
     var landmarkDiv = "landmarkDiv" + landmark.ID;
     <div class="index_landmark" id="@landmarkDiv">
@@ -47,7 +47,7 @@
                 var distanceID = "distanceToLocation" + landmark.ID;
             }
             <div class="indexDistanceCalculation" id="@distanceID">
-                @* this will be filled in by the script below *@
+               
             </div>
 
 
@@ -57,4 +57,4 @@
             </script>
         </div>
     </div>
-}
+}*@
