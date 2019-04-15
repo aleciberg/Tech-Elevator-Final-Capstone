@@ -29,6 +29,7 @@ section {
 #navbar {
     overflow: hidden;
     background-color: #bb0000;
+    z-index: 9999;
 }
 
     #navbar a {
