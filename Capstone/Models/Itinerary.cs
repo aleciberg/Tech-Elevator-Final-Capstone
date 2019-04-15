@@ -10,6 +10,8 @@ namespace Capstone.Models
         public int ID { get; set; }
         public string UserEmail { get; set; }
         public string Name { get; set; }
+        public decimal StartingLatitude { get; set; }
+        public decimal StartingLongitude { get; set; }
         public List<Landmark> LandmarksOrderedByVisitOrder { get; set; }
     }
 }

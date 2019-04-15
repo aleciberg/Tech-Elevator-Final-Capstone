@@ -41,7 +41,9 @@ namespace Capstone.DAL
                     {
                         ID = Convert.ToInt32(reader["itinerary_id"]),
                         Name = Convert.ToString(reader["itinerary_name"]),
-                        UserEmail = Convert.ToString(reader["email"])
+                        UserEmail = Convert.ToString(reader["email"]) //TODO: need starting point
+                        //StartingLatitude = Convert.ToDecimal(reader["start_lat"]),
+                        //StartingLongitude = Convert.ToDecimal(reader["start_lon"])
                     };
                 }
 
@@ -51,6 +53,13 @@ namespace Capstone.DAL
             return itinerary;
         }
 
+        public void UpdateItinerary(Itinerary itinerary)
+        {
+            //SQL updates table based on itinerary.ID
+
+
+
+        }
 
         public int GetNextItineraryId()
         {
