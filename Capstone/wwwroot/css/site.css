@@ -46,12 +46,12 @@ body {
 
     .navLink > .loginRegister {
         display: inline-block;
-        float: right;
+        /*float: right;*/
     }
 
     .navLink > .navFun {
         display: inline-block;
-        float: left;
+        /*float: left;*/
     }
 
 .navLogo {
@@ -163,4 +163,10 @@ body {
 .backToList {
     text-decoration: none;
     color: white;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
