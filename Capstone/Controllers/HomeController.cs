@@ -162,45 +162,45 @@ namespace Capstone.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //[HttpGet]
+        //public IActionResult CreateItinerary()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult CreateItinerary(string name)
+        //{
+        //    Itinerary itinerary = new Itinerary()
+        //    {
+        //        Name = name,
+        //        ID = itineraryDAL.GetNextItineraryId()
+        //    };
+        //    //itinerary.RemainingLandmarks = itineraryDAL.GetAllLandmarksByItineraryId(itinerary.ID);
+
+        //    int result = itineraryDAL.CreateItinerary(itinerary.ID, itinerary.Name);
+
+        //    return RedirectToAction("Itinerary", itinerary.ID);
+        //}
+
         [HttpGet]
-        public IActionResult CreateItinerary()
+        public IActionResult Itinerary(int id)
         {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateItinerary(string name)
-        {
-            Itinerary itinerary = new Itinerary()
-            {
-                Name = name,
-                ID = itineraryDAL.GetNextItineraryId()
-            };
-            //itinerary.RemainingLandmarks = itineraryDAL.GetAllLandmarksByItineraryId(itinerary.ID);
-
-            int result = itineraryDAL.CreateItinerary(itinerary.ID, itinerary.Name);
-
-            return RedirectToAction("Itinerary", itinerary.ID);
-        }
-
-        [HttpGet]
-        public IActionResult Itinerary(int itineraryId)
-        {
-            Itinerary itinerary = itineraryDAL.GetItineraryById(itineraryId);
+            Itinerary itinerary = itineraryDAL.GetItineraryById(id);
 
             return View(itinerary);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult RenameItinerary(Itinerary itinerary, string name)
-        {
-            Itinerary newItinerary = itinerary;
-            newItinerary.Name = name;
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult RenameItinerary(Itinerary itinerary, string name)
+        //{
+        //    Itinerary newItinerary = itinerary;
+        //    newItinerary.Name = name;
 
-            return RedirectToAction("Itinerary", newItinerary);
-        }
+        //    return RedirectToAction("Itinerary", newItinerary);
+        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
