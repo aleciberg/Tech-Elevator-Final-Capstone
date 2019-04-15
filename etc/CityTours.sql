@@ -1,14 +1,14 @@
 USE CityTours;
 GO
 
-ALTER TABLE [dbo].[itinerary] DROP CONSTRAINT [fk_landmark_id];
-ALTER TABLE [dbo].[itinerary_user] DROP CONSTRAINT [fk_itinerary_id];
-ALTER TABLE [dbo].[itinerary_user] DROP CONSTRAINT [fk_user_id];
+--ALTER TABLE [dbo].[itinerary] DROP CONSTRAINT [fk_landmark_id];
+--ALTER TABLE [dbo].[itinerary_user] DROP CONSTRAINT [fk_itinerary_id];
+--ALTER TABLE [dbo].[itinerary_user] DROP CONSTRAINT [fk_user_id];
 
-DROP TABLE [dbo].[landmark];
-DROP TABLE [dbo].[users];
-DROP TABLE [dbo].[itinerary];
-DROP TABLE [dbo].[itinerary_user];
+--DROP TABLE [dbo].[landmark];
+--DROP TABLE [dbo].[users];
+--DROP TABLE [dbo].[itinerary];
+--DROP TABLE [dbo].[itinerary_user];
 
 USE master;
 GO
@@ -62,15 +62,21 @@ CREATE TABLE itinerary (
     landmark_id integer,
     visit_order integer,
 
-	CONSTRAINT pk_itinerary_itinerary_id PRIMARY KEY (itinerary_id),
+	--CONSTRAINT pk_itinerary_itinerary_id PRIMARY KEY (itinerary_id),
     CONSTRAINT fk_landmark_id FOREIGN KEY (landmark_id) REFERENCES landmark(landmark_id),
 );
+
+CREATE TABLE itinerary_name (
+	itinerary_id integer NOT NULL,
+	itinerary_name varchar(100)
+	CONSTRAINT pk_itinerary_name_itinerary_id PRIMARY KEY (itinerary_id)
+)
 
 CREATE TABLE itinerary_user (
     itinerary_id integer NOT NULL,
     user_id integer NOT NULL,
 
-    CONSTRAINT fk_itinerary_id FOREIGN KEY (itinerary_id) REFERENCES itinerary(itinerary_id),
+    --CONSTRAINT fk_itinerary_id FOREIGN KEY (itinerary_id) REFERENCES itinerary(itinerary_id),
 	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
 );
 
@@ -105,5 +111,9 @@ INSERT INTO itinerary (itinerary_id, landmark_id, visit_order) VALUES (3, 5, 3);
 INSERT INTO itinerary_user (itinerary_id, user_id) VALUES (1, 2);
 INSERT INTO itinerary_user (itinerary_id, user_id) VALUES (2, 4);
 INSERT INTO itinerary_user (itinerary_id, user_id) VALUES (3, 1);
+
+INSERT INTO itinerary_name (itinerary_id, itinerary_name) VALUES (1, 'Saturday Trip!')
+INSERT INTO itinerary_name (itinerary_id, itinerary_name) VALUES (2, 'Family Fun')
+INSERT INTO itinerary_name (itinerary_id, itinerary_name) VALUES (3, 'First Date')
 
 COMMIT;
