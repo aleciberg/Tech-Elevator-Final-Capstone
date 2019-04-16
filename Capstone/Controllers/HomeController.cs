@@ -162,27 +162,29 @@ namespace Capstone.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //[HttpGet]
-        //public IActionResult CreateItinerary()
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        public IActionResult CreateItinerary()
+        {
+            return View();
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult CreateItinerary(string name)
-        //{
-        //    Itinerary itinerary = new Itinerary()
-        //    {
-        //        Name = name,
-        //        ID = itineraryDAL.GetNextItineraryId()
-        //    };
-        //    //itinerary.RemainingLandmarks = itineraryDAL.GetAllLandmarksByItineraryId(itinerary.ID);
+        //alec working this
 
-        //    int result = itineraryDAL.CreateItinerary(itinerary.ID, itinerary.Name);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateItinerary(string name)
+        {
+            Itinerary itinerary = new Itinerary()
+            {
+                Name = name,
+                ID = itineraryDAL.GetNextItineraryId()
+            };
+            //itinerary.RemainingLandmarks = itineraryDAL.GetAllLandmarksByItineraryId(itinerary.ID);
 
-        //    return RedirectToAction("Itinerary", itinerary.ID);
-        //}
+            int result = itineraryDAL.CreateItinerary(itinerary.ID, itinerary.Name);
+
+            return RedirectToAction("Itinerary", itinerary.ID);
+        }
 
         [HttpGet]
         public IActionResult Itinerary(int id)
