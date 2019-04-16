@@ -274,6 +274,15 @@ namespace Capstone.Controllers
             return RedirectToAction("Itinerary", new { id = itineraryId });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ChangeItineraryStartingPosition(int itineraryId, string itineraryStartingLatitude, string itineraryStartingLongitude)
+        {
+            itineraryDAL.UpdateItineraryStartingLocation(itineraryId, Convert.ToDecimal(itineraryStartingLatitude), Convert.ToDecimal(itineraryStartingLongitude));
+
+            return RedirectToAction("Itinerary", new { id = itineraryId });
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
