@@ -17,6 +17,7 @@ namespace Capstone.DAL.Interfaces
 
         int GetNextItineraryId();
         int CreateItinerary(int id, string name, int userId, decimal lat, decimal lon);
+        int DeleteItinerary(int id);
         List<Landmark> GetAllLandmarksByItineraryIdOrderedByVisitOrder(int itineraryId);
         int GetNumberOfLandmarksForItinerary(int itineraryId);
         int AssignLandmarkToBlankItinerary(int itineraryId, int landmarkId);

@@ -47,17 +47,22 @@
     }
 </div>
 
-<ul id="itineraryLandmarks">
+<div id="itineraryLandmarks">
     @foreach (Landmark landmark in Model.AllLandmarks)
     {
-        <li>@landmark.Name</li>
+        <span>@landmark.Name</span>
         <form asp-action="AddLandmarkToItinerary" asp-controller="Home" method="post">
             <button type="submit">Add to Itinerary</button>
             <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
             <input type="hidden" name="landmarkId" value="@landmark.ID" />
         </form>
     }
-</ul>
+</div>
+
+<form asp-action="DeleteItinerary" asp-controller="Home" method="post">
+    <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+    <button type="submit">Delete</button>
+</form>
 
 @*<script src="~/js/Sortable/Sortable.js">
         initializeSortableLandmarks();
