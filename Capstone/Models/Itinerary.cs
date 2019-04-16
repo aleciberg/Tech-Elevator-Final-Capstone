@@ -12,6 +12,17 @@ namespace Capstone.Models
         public string Name { get; set; }
         public decimal StartingLatitude { get; set; }
         public decimal StartingLongitude { get; set; }
-        public List<Landmark> LandmarksOrderedByVisitOrder { get; set; }
+        public IEnumerable<Landmark> LandmarksOrderedByVisitOrder { get; set; }
+        public Dictionary<int, Landmark> VisitOrderToLandmarkId
+        {
+            get
+            {
+                return new Dictionary<int, Landmark> { { 99, new Landmark() }, { 2, new Landmark() } };
+            }
+            set
+            {
+                //nothing
+            }
+        }
     }
 }

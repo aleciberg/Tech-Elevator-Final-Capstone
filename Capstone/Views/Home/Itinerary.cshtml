@@ -5,20 +5,31 @@
 
 <h2>Itinerary</h2>
 
-<p>Name of itinerary: @Model.Name</p>
-<p>@Model.ID</p>
-<p>@Model.UserEmail</p>
-<p>@Model.StartingLatitude</p>
-<p>@Model.StartingLongitude</p>
-
+<p>
+    Name of itinerary: <span id="itineraryName">@Model.Name</span>
+</p>
+<p>ID: <span id="itineraryId">@Model.ID</span></p>
+<p>Email associated with itinerary: <span id="itineraryEmail">@Model.UserEmail</span></p>
+<p>Starting latitude: <span id="itineraryStartLat">@Model.StartingLatitude</span></p>
+<p>Starting longitude: <span id="itineraryStartLon">@Model.StartingLongitude</span></p>
 
 <ul id="itineraryLandmarks">
-    @foreach (Landmark landmark in Model.LandmarksOrderedByVisitOrder)
+
+    @for (int order = 0; order < Model.LandmarksOrderedByVisitOrder.ToList().Count; order++)
     {
-        <li>@landmark.Name</li>
+        int displayOrder = order + 1;
+        string itineraryOrderItem = "itineraryOrderItem" + displayOrder;
+
+        <li>
+            <input id="@itineraryOrderItem"
+                   type="number"
+                   value="@displayOrder"
+                   min="1"
+                   max="@Model.LandmarksOrderedByVisitOrder.ToList().Count" />
+            @Model.LandmarksOrderedByVisitOrder.ToList()[order].Name
+        </li>
     }
 </ul>
 
-@*<script src="~/js/Sortable/Sortable.js">
-    initializeSortableLandmarks();
-</script>*@
+
+@*<button class="button"><a asp-action="Itinerary" asp-bind style="text-decoration: none;">Save itinerary</a></button>*@
