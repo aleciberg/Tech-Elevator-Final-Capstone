@@ -234,9 +234,9 @@ namespace Capstone.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteLandmarkFromItinerary(int itineraryId, int visitOrder)
+        public IActionResult DeleteLandmarkFromItinerary(int itineraryId, int landmarkId, int visitOrderOfRemovedLandmark)
         {
-            //itineraryDAL.
+            itineraryDAL.RemoveLandmarkFromItinerary(itineraryId, landmarkId, visitOrderOfRemovedLandmark);
             return RedirectToAction("Itinerary", new { id = itineraryId });
         }
 

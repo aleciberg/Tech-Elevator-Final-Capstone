@@ -23,7 +23,7 @@ namespace Capstone.DAL
         private const string SQL_AssignLandmarkToBlankItinerary = "UPDATE itinerary SET landmark_id = @landmark_id, visit_order = 1 WHERE itinerary_id = @itinerary_id;";
         private const string SQL_GetLastItinerary = "SELECT TOP 1 * FROM itinerary WHERE itinerary_id = @itinerary_id ORDER BY visit_order DESC;";
         private const string SQL_AppendLandmarkToItinerary = "INSERT INTO itinerary VALUES (@itinerary_id, @start_lat, @start_lon, @landmark_id, @visit_order);";
-        private const string SQL_RemoveLandmarkFromItinerary = "DELETE FROM itinerary WHERE landmark_id = @landmark_id; UPDATE itinerary SET visit_order = visit_order - 1 WHERE itinerary_id = @itinerary_id AND visit_order > @visit_order_of_deleted_item;";
+        private const string SQL_RemoveLandmarkFromItinerary = "DELETE FROM itinerary WHERE landmark_id = @landmark_id AND itinerary_id = @itinerary_id; UPDATE itinerary SET visit_order = visit_order - 1 WHERE itinerary_id = @itinerary_id AND visit_order > @visit_order_of_deleted_item;";
         private const string SQL_DeleteItinerary = "DELETE FROM itinerary WHERE itinerary_id = @itinerary_id; DELETE FROM itinerary_name WHERE itinerary_id = @itinerary_id; DELETE FROM itinerary_user WHERE itinerary_id = @itinerary_id;";
 
 
@@ -271,7 +271,7 @@ namespace Capstone.DAL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("", connection);
+                SqlCommand command = new SqlCommand(SQL_RemoveLandmarkFromItinerary, connection);
 
                 command.Parameters.AddWithValue("@itinerary_id", itineraryId);
                 command.Parameters.AddWithValue("@landmark_id", landmarkId);
