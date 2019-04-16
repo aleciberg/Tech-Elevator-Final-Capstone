@@ -24,5 +24,6 @@ namespace Capstone.DAL.Interfaces
         Itinerary GetLastItinerary(int itineraryId);
         int AppendLandmarkToItinerary(int itineraryId, int landmarkId, int visitOrder, decimal lat, decimal lon);
         int RemoveLandmarkFromItinerary(int itineraryId, int landmarkId, int visitOrderOfRemovedLandmark);
+        List<Itinerary> GetAllItinerariesByUser(int userId);
     }
 }
