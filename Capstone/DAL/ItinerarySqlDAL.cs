@@ -25,6 +25,7 @@ namespace Capstone.DAL
         private const string SQL_AppendLandmarkToItinerary = "INSERT INTO itinerary VALUES (@itinerary_id, @start_lat, @start_lon, @landmark_id, @visit_order);";
         private const string SQL_RemoveLandmarkFromItinerary = "DELETE FROM itinerary WHERE landmark_id = @landmark_id AND itinerary_id = @itinerary_id; UPDATE itinerary SET visit_order = visit_order - 1 WHERE itinerary_id = @itinerary_id AND visit_order > @visit_order_of_deleted_item;";
         private const string SQL_DeleteItinerary = "DELETE FROM itinerary WHERE itinerary_id = @itinerary_id; DELETE FROM itinerary_name WHERE itinerary_id = @itinerary_id; DELETE FROM itinerary_user WHERE itinerary_id = @itinerary_id;";
+        private const string SQL_GetAllItinerariesByUser = "SELECT itinerary_name,  itinerary.itinerary_id FROM itinerary JOIN itinerary_name ON itinerary.itinerary_id = itinerary_name.itinerary_id JOIN itinerary_user ON itinerary.itinerary_id = itinerary_user.itinerary_id WHERE itinerary_user.user_id = @user_id";
 
 
         public ItinerarySqlDAL(string dbConnectionString)
@@ -275,12 +276,36 @@ namespace Capstone.DAL
 
                 command.Parameters.AddWithValue("@itinerary_id", itineraryId);
                 command.Parameters.AddWithValue("@landmark_id", landmarkId);
-                command.Parameters.AddWithValue("@visit_order_of_deleted_item", visitOrderOfRemovedLandmark); 
+                command.Parameters.AddWithValue("@visit_order_of_deleted_item", visitOrderOfRemovedLandmark);
 
                 result = command.ExecuteNonQuery();
             }
 
             return result;
+        }
+
+        public List<Itinerary> GetAllItinerariesByUser(int userId)
+        {
+            List<Itinerary> itineraries = new List<Itinerary>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(SQL_GetAllItinerariesByUser, connection);
+                command.Parameters.AddWithValue("@user_id", userId);
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Itinerary itinerary = new Itinerary();
+
+                    itinerary.Name = Convert.ToString(reader["itinerary_name"]);
+                    itinerary.ID = Convert.ToInt32(reader["itinerary_id"]);
+
+                    itineraries.Add(itinerary);
+                }
+            }
+
+            return itineraries;
         }
     }
 }

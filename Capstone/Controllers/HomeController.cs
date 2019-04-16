@@ -293,6 +293,16 @@ namespace Capstone.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult ItineraryListByUser()
+        {
+            User user = authProvider.GetCurrentUser();
+
+            List<Itinerary> itineraries = itineraryDAL.GetAllItinerariesByUser(user.ID);
+
+            return View(itineraries);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
