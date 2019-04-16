@@ -274,6 +274,14 @@ namespace Capstone.Controllers
             return RedirectToAction("Itinerary", new { id = itineraryId });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteItinerary(int itineraryId)
+        {
+            int result = itineraryDAL.DeleteItinerary(itineraryId);
+            return RedirectToAction("Index");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

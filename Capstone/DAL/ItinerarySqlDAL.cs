@@ -23,6 +23,7 @@ namespace Capstone.DAL
         private const string SQL_AssignLandmarkToBlankItinerary = "UPDATE itinerary SET landmark_id = @landmark_id, visit_order = 1 WHERE itinerary_id = @itinerary_id;";
         private const string SQL_GetLastItinerary = "SELECT TOP 1 * FROM itinerary WHERE itinerary_id = @itinerary_id ORDER BY visit_order DESC;";
         private const string SQL_AppendLandmarkToItinerary = "INSERT INTO itinerary VALUES (@itinerary_id, @start_lat, @start_lon, @landmark_id, @visit_order);";
+        private const string SQL_DeleteItinerary = "DELETE FROM itinerary WHERE itinerary_id = @itinerary_id; DELETE FROM itinerary_name WHERE itinerary_id = @itinerary_id; DELETE FROM itinerary_user WHERE itinerary_id = @itinerary_id;";
 
         public ItinerarySqlDAL(string dbConnectionString)
         {
@@ -133,6 +134,21 @@ namespace Capstone.DAL
                 command.Parameters.AddWithValue("@user_id", userId);
                 command.Parameters.AddWithValue("@start_lat", lat);
                 command.Parameters.AddWithValue("@start_lon", lon);
+                result = (int)command.ExecuteNonQuery();
+            }
+
+            return result;
+        }
+
+        public int DeleteItinerary(int id)
+        {
+            int result = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(SQL_DeleteItinerary, connection);
+                command.Parameters.AddWithValue("@itinerary_id", id);
                 result = (int)command.ExecuteNonQuery();
             }
 

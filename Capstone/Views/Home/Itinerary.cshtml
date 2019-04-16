@@ -6,7 +6,7 @@
 <h2>Itinerary</h2>
 
 <form asp-action="RenameItinerary" asp-controller="Home" method="post">
-    Name of itinerary: <input type="text" name="newItineraryName" value="@Model.Itinerary.Name"/>
+    Name of itinerary: <input type="text" name="newItineraryName" value="@Model.Itinerary.Name" />
     <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
     <button type="submit">Save</button>
 </form>
@@ -52,6 +52,11 @@
         </form>
     }
 </ul>
+
+<form asp-action="DeleteItinerary" asp-controller="Home" method="post">
+    <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+    <button type="submit">Delete</button>
+</form>
 
 @*<script src="~/js/Sortable/Sortable.js">
         initializeSortableLandmarks();
