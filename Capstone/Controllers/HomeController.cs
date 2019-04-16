@@ -232,12 +232,13 @@ namespace Capstone.Controllers
             return RedirectToAction("Itinerary", new { id = itineraryId });
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult DeleteLandmarkFromItinerary(int itineraryId, int visitOrder)
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteLandmarkFromItinerary(int itineraryId, int visitOrder)
+        {
+            itineraryDAL.
+            return RedirectToAction("Itinerary", new { id = itineraryId });
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -276,7 +277,7 @@ namespace Capstone.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ChangeItineraryStartingPosition(int itineraryId, string itineraryStartingLatitude, string itineraryStartingLongitude)
+        public IActionResult ChangeItineraryStartingLatLon(int itineraryId, string itineraryStartingLatitude, string itineraryStartingLongitude)
         {
             itineraryDAL.UpdateItineraryStartingLocation(itineraryId, Convert.ToDecimal(itineraryStartingLatitude), Convert.ToDecimal(itineraryStartingLongitude));
 

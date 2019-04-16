@@ -15,7 +15,7 @@
 <p>@Model.Itinerary.UserEmail</p>
 <div id="itineraryMap"></div>
 
-<form asp-action="ChangeItineraryStartingPosition" asp-controller="Home" method="post">
+<form asp-action="ChangeItineraryStartingLatLon" asp-controller="Home" method="post">
     <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
     <input type="text" name="itineraryStartingLatitude" id="itineraryStartingLatitude" readonly value="@Model.Itinerary.StartingLatitude" />
     <input type="text" name="itineraryStartingLongitude" id="itineraryStartingLongitude" readonly value="@Model.Itinerary.StartingLongitude" />
