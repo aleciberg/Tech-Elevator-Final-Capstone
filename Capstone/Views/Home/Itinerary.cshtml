@@ -25,35 +25,43 @@
 <div id="itineraryLandmarks">
     @for (int position = 0; position < Model.Itinerary.LandmarksOrderedByVisitOrder.Count; position++)
     {
-        <form asp-action="DeleteLandmarkFromItinerary" asp-controller="Home" method="post">
-            <button type="submit">Remove Landmark</button>
-            <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
-            <input type="hidden" name="landmarkId" value="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID" />
-            <input type="hidden" name="visitOrderOfRemovedLandmark" value="@(position + 1) " />
-        </form>
-        if (position != 0)
-        {
-            <form asp-action="MoveLandmarkUpOnItinerary" asp-controller="Home" method="post">
-                <button type="submit">Up</button>
-                <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
-                <input type="hidden" name="landmarkId" value="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID" />
-                <input type="hidden" name="fromPosition" value="@position" />
-            </form>
-        }
-        if (position != Model.Itinerary.LandmarksOrderedByVisitOrder.Count - 1)
-        {
-            <form asp-action="MoveLandmarkDownOnItinerary" asp-controller="Home" method="post">
-                <button type="submit">Down</button>
-                <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
-                <input type="hidden" name="landmarkId" value="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID" />
-                <input type="hidden" name="fromPosition" value="@position" />
-            </form>
-        }
-        <p>@Model.Itinerary.LandmarksOrderedByVisitOrder[position].Name</p>
+        @*<div id="itineraryLandmarkDiv">*@
+            <div class="itineraryLandmarkDelete">
+                <form asp-action="DeleteLandmarkFromItinerary" asp-controller="Home" method="post">
+                    <button type="submit">Remove Landmark</button>
+                    <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+                    <input type="hidden" name="landmarkId" value="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID" />
+                    <input type="hidden" name="visitOrderOfRemovedLandmark" value="@(position + 1) " />
+                </form>
+            </div>
+            if (position != 0)
+            {
+            <div class="itineraryLandmarkUp">
+                <form asp-action="MoveLandmarkUpOnItinerary" asp-controller="Home" method="post">
+                    <button type="submit">Up</button>
+                    <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+                    <input type="hidden" name="landmarkId" value="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID" />
+                    <input type="hidden" name="fromPosition" value="@position" />
+                </form>
+            </div>
+            }
+            if (position != Model.Itinerary.LandmarksOrderedByVisitOrder.Count - 1)
+            {
+            <div class="itineraryLandmarkUp">
+                <form asp-action="MoveLandmarkDownOnItinerary" asp-controller="Home" method="post">
+                    <button type="submit">Down</button>
+                    <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+                    <input type="hidden" name="landmarkId" value="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID" />
+                    <input type="hidden" name="fromPosition" value="@position" />
+                </form>
+            </div>
+            }
+            <p>@Model.Itinerary.LandmarksOrderedByVisitOrder[position].Name</p>
+        @*</div>*@
     }
 </div>
 
-<div id="itineraryLandmarks">
+<div id="itineraryUnusedLandmarks">
     @foreach (Landmark landmark in Model.UnusedLandmarks)
     {
         <span>@landmark.Name</span>

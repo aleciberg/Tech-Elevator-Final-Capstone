@@ -167,3 +167,7 @@ section {
     text-decoration: none;
     color: white;
 }
+
+#itineraryLandmark {
+    display: flex;
+}

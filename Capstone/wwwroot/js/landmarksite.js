@@ -285,22 +285,22 @@ function myFunction() {
 
 
 
-function initializeSortableLandmarks() {
-    var itineraryLandmarks = document.getElementById('itineraryLandmarks');
-    new Sortable(itineraryLandmarks, {
-        group: "landmarks",
-        handle: ".my-handle",
-        draggable: ".item",
-        ghostClass: "sortable-ghost",
-        onAdd: function (evt) {
-            var itemEl = evt.item;
-        },
-        onUpdate: function (evt) {
-            var itemEl = evt.item; // the current dragged HTMLElement
-        },
-        onRemove: function (evt) {
-            var itemEl = evt.item;
-        }
-    });
-}
+//function initializeSortableLandmarks() {
+//    var itineraryLandmarks = document.getElementById('itineraryLandmarks');
+//    new Sortable(itineraryLandmarks, {
+//        group: "landmarks",
+//        handle: ".my-handle",
+//        draggable: ".item",
+//        ghostClass: "sortable-ghost",
+//        onAdd: function (evt) {
+//            var itemEl = evt.item;
+//        },
+//        onUpdate: function (evt) {
+//            var itemEl = evt.item; // the current dragged HTMLElement
+//        },
+//        onRemove: function (evt) {
+//            var itemEl = evt.item;
+//        }
+//    });
+//}
 
