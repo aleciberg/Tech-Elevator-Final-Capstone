@@ -103,12 +103,12 @@ INSERT INTO users (user_id, username, role, email, password) VALUES (4, 'mackenz
 SET IDENTITY_INSERT users OFF;
 
 INSERT INTO itinerary (itinerary_id, start_lat, start_lon, landmark_id, visit_order) VALUES (1, 39.992856, -83.050262, 2, 1);
-INSERT INTO itinerary (itinerary_id, start_lat, start_lon, landmark_id, visit_order) VALUES (1, 40.156061, -83.118373, 1, 2);
+INSERT INTO itinerary (itinerary_id, start_lat, start_lon, landmark_id, visit_order) VALUES (1, 39.992856, -83.050262, 1, 2);
 INSERT INTO itinerary (itinerary_id, start_lat, start_lon, landmark_id, visit_order) VALUES (2, 39.963137, -82.974964, 1, 1);
-INSERT INTO itinerary (itinerary_id, start_lat, start_lon, landmark_id, visit_order) VALUES (2, 39.989985, -83.080465, 3, 2);
+INSERT INTO itinerary (itinerary_id, start_lat, start_lon, landmark_id, visit_order) VALUES (2, 39.963137, -82.974964, 3, 2);
 INSERT INTO itinerary (itinerary_id, start_lat, start_lon, landmark_id, visit_order) VALUES (3, 39.965358, -82.954723, 2, 1);
-INSERT INTO itinerary (itinerary_id, start_lat, start_lon, landmark_id, visit_order) VALUES (3, 40.156061, -83.118373, 4, 2);
-INSERT INTO itinerary (itinerary_id, start_lat, start_lon, landmark_id, visit_order) VALUES (3, 39.961720, -83.061591, 5, 3);
+INSERT INTO itinerary (itinerary_id, start_lat, start_lon, landmark_id, visit_order) VALUES (3, 39.965358, -82.954723, 4, 2);
+INSERT INTO itinerary (itinerary_id, start_lat, start_lon, landmark_id, visit_order) VALUES (3, 39.965358, -82.954723, 5, 3);
 
 INSERT INTO itinerary_user (itinerary_id, user_id) VALUES (1, 2);
 INSERT INTO itinerary_user (itinerary_id, user_id) VALUES (2, 4);

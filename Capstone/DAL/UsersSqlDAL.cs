@@ -68,6 +68,7 @@ namespace Capstone.DAL
                             Password = Convert.ToString(reader["password"]),
                             Email = Convert.ToString(reader["email"]),
                             Role = Convert.ToString(reader["role"]),
+                            ID = Convert.ToInt32(reader["user_id"])
                         };
                     }
                 }

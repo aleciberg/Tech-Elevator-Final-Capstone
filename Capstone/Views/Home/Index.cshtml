@@ -9,8 +9,8 @@
                                       type="number"
                                       onchange="indexSearch(this.value)"
                                       onkeyup="indexSearch(this.value)"
-                                      onclick="indexSearch(this.value)" 
-                                      value="15"/> miles.
+                                      onclick="indexSearch(this.value)"
+                                      value="15" /> miles.
 </div>
 
 <div id="map">
@@ -18,7 +18,7 @@
 
 <p>Click the map to change your starting location.</p>
 
-<a asp-controller="Home" asp-action="Itinerary"><div>Create Itinerary</div></a>
+<a asp-controller="Home" asp-action="CreateItinerary"><div>Create Itinerary</div></a>
 
 @foreach (Landmark landmark in Model)
 {
@@ -53,3 +53,4 @@
     </div>
 }
 
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges&callback=initMap"></script>

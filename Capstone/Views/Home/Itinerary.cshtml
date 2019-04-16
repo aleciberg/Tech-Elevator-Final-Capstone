@@ -1,15 +1,58 @@
-﻿@model Itinerary
+﻿@model ItineraryViewModel
 @{
     ViewData["Title"] = "Itinerary";
 }
 
 <h2>Itinerary</h2>
 
-<p>@Model.Name</p>
-<p>@Model.ID</p>
-<p>@Model.UserEmail</p>
+<form asp-action="RenameItinerary" asp-controller="Home" method="post">
+    Name of itinerary: <input type="text" name="newItineraryName" value="@Model.Itinerary.Name"/>
+    <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+    <button type="submit">Save</button>
+</form>
 
-@foreach (Landmark landmark in Model.LandmarksOrderedByVisitOrder)
-{
-    <div>@landmark.Name</div>
-}
+<p>@Model.Itinerary.ID</p>
+<p>@Model.Itinerary.UserEmail</p>
+<p>@Model.Itinerary.StartingLatitude</p>
+<p>@Model.Itinerary.StartingLongitude</p>
+
+<div id="itineraryLandmarks">
+    @for (int position = 0; position < Model.Itinerary.LandmarksOrderedByVisitOrder.Count; position++)
+    {
+        if (position != 0)
+        {
+            <form asp-action="MoveLandmarkUpOnItinerary" asp-controller="Home" method="post">
+                <button type="submit">Up</button>
+                <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+                <input type="hidden" name="landmarkId" value="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID" />
+                <input type="hidden" name="fromPosition" value="@position" />
+            </form>
+        }
+        if (position != Model.Itinerary.LandmarksOrderedByVisitOrder.Count - 1)
+        {
+            <form asp-action="MoveLandmarkDownOnItinerary" asp-controller="Home" method="post">
+                <button type="submit">Down</button>
+                <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+                <input type="hidden" name="landmarkId" value="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID" />
+                <input type="hidden" name="fromPosition" value="@position" />
+            </form>
+        }
+        <p>@Model.Itinerary.LandmarksOrderedByVisitOrder[position].Name</p>
+    }
+</div>
+
+<ul id="itineraryLandmarks">
+    @foreach (Landmark landmark in Model.AllLandmarks)
+    {
+        <li>@landmark.Name</li>
+        <form asp-action="AddLandmarkToItinerary" asp-controller="Home" method="post">
+            <button type="submit">Add to Itinerary</button>
+            <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+            <input type="hidden" name="landmarkId" value="@landmark.ID" />
+        </form>
+    }
+</ul>
+
+@*<script src="~/js/Sortable/Sortable.js">
+        initializeSortableLandmarks();
+    </script>*@
