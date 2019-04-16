@@ -239,19 +239,31 @@ namespace Capstone.Controllers
         //    return View();
         //}
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult MoveLandmarkUpOnItinerary(int itineraryId, int visitOrder)
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MoveLandmarkUpOnItinerary(int itineraryId, int landmarkId, int fromPosition)
+        {
+            List<Landmark> originalList = itineraryDAL.GetAllLandmarksByItineraryIdOrderedByVisitOrder(itineraryId);
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult MoveLandmarkDownOnItinerary(int itineraryId, int visitOrder)
-        //{
-        //    return View();
-        //}
+            Landmark temp = originalList[fromPosition - 1];
+            itineraryDAL.UpdateItineraryLandmark(itineraryId, landmarkId, fromPosition - 1);
+            itineraryDAL.UpdateItineraryLandmark(itineraryId, temp.ID, fromPosition);
+
+            return RedirectToAction("Itinerary", new { id = itineraryId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MoveLandmarkDownOnItinerary(int itineraryId, int landmarkId, int fromPosition)
+        {
+            List<Landmark> originalList = itineraryDAL.GetAllLandmarksByItineraryIdOrderedByVisitOrder(itineraryId);
+
+            Landmark temp = originalList[fromPosition + 1];
+            itineraryDAL.UpdateItineraryLandmark(itineraryId, landmarkId, fromPosition + 1);
+            itineraryDAL.UpdateItineraryLandmark(itineraryId, temp.ID, fromPosition);
+
+            return RedirectToAction("Itinerary", new { id = itineraryId });
+        }
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]

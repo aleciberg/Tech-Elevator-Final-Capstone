@@ -9,6 +9,12 @@ namespace Capstone.DAL.Interfaces
     public interface IItineraryDAL
     {
         Itinerary GetItineraryById(int id);
+
+        void UpdateItineraryName(int itineraryId, string newItineraryName);
+        void UpdateItineraryStartingLocation(int itineraryId, decimal startingLatitude, decimal startingLongitude);
+        void UpdateItineraryLandmarks(int itineraryId, List<Landmark> orderedLandmarks);
+        void UpdateItineraryLandmark(int itineraryId, int landmarkId, int visitOrder);
+
         int GetNextItineraryId();
         int CreateItinerary(int id, string name, int userId, decimal lat, decimal lon);
         List<Landmark> GetAllLandmarksByItineraryIdOrderedByVisitOrder(int itineraryId);

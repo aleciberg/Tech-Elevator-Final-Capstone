@@ -12,22 +12,40 @@
 <p>@Model.Itinerary.StartingLongitude</p>
 
 
-<ul id="itineraryLandmarks">
-    @foreach (Landmark landmark in Model.Itinerary.LandmarksOrderedByVisitOrder)
+<div id="itineraryLandmarks">
+    @for (int position = 0; position < Model.Itinerary.LandmarksOrderedByVisitOrder.Count; position++)
     {
-        <li>@landmark.Name</li>
+        if (position != 0)
+        {
+            <form asp-action="MoveLandmarkUpOnItinerary" asp-controller="Home" method="post">
+                <button type="submit">Up</button>
+                <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+                <input type="hidden" name="landmarkId" value="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID" />
+                <input type="hidden" name="fromPosition" value="@position" />
+            </form>
+        }
+        if (position != Model.Itinerary.LandmarksOrderedByVisitOrder.Count - 1)
+        {
+            <form asp-action="MoveLandmarkDownOnItinerary" asp-controller="Home" method="post">
+                <button type="submit">Down</button>
+                <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+                <input type="hidden" name="landmarkId" value="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID" />
+                <input type="hidden" name="fromPosition" value="@position" />
+            </form>
+        }
+        <p>@Model.Itinerary.LandmarksOrderedByVisitOrder[position].Name</p>
     }
-</ul>
+</div>
 
 <ul id="itineraryLandmarks">
     @foreach (Landmark landmark in Model.AllLandmarks)
     {
         <li>@landmark.Name</li>
         <form asp-action="AddLandmarkToItinerary" asp-controller="Home" method="post">
-<button type="submit">Add to Itinerary</button>
+            <button type="submit">Add to Itinerary</button>
             <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
             <input type="hidden" name="landmarkId" value="@landmark.ID" />
-</form>
+        </form>
     }
 </ul>
 
