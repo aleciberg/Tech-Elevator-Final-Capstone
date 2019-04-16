@@ -13,5 +13,6 @@ namespace Capstone.Models
         public decimal StartingLatitude { get; set; }
         public decimal StartingLongitude { get; set; }
         public List<Landmark> LandmarksOrderedByVisitOrder { get; set; }
+        public int LastVisitNumber { get; set; }
     }
 }

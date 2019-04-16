@@ -1,24 +1,36 @@
-﻿@model Itinerary
+﻿@model ItineraryViewModel
 @{
     ViewData["Title"] = "Itinerary";
 }
 
 <h2>Itinerary</h2>
 
-<p>Name of itinerary: @Model.Name</p>
-<p>@Model.ID</p>
-<p>@Model.UserEmail</p>
-<p>@Model.StartingLatitude</p>
-<p>@Model.StartingLongitude</p>
+<p>Name of itinerary: @Model.Itinerary.Name</p>
+<p>@Model.Itinerary.ID</p>
+<p>@Model.Itinerary.UserEmail</p>
+<p>@Model.Itinerary.StartingLatitude</p>
+<p>@Model.Itinerary.StartingLongitude</p>
 
 
 <ul id="itineraryLandmarks">
-    @foreach (Landmark landmark in Model.LandmarksOrderedByVisitOrder)
+    @foreach (Landmark landmark in Model.Itinerary.LandmarksOrderedByVisitOrder)
     {
         <li>@landmark.Name</li>
     }
 </ul>
 
+<ul id="itineraryLandmarks">
+    @foreach (Landmark landmark in Model.AllLandmarks)
+    {
+        <li>@landmark.Name</li>
+        <form asp-action="AddLandmarkToItinerary" asp-controller="Home" method="post">
+<button type="submit">Add to Itinerary</button>
+            <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+            <input type="hidden" name="landmarkId" value="@landmark.ID" />
+</form>
+    }
+</ul>
+
 @*<script src="~/js/Sortable/Sortable.js">
-    initializeSortableLandmarks();
-</script>*@
+        initializeSortableLandmarks();
+    </script>*@
