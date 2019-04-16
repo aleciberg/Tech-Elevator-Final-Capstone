@@ -168,22 +168,26 @@ namespace Capstone.Controllers
             return View();
         }
 
-        //alec working this
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateItinerary(string name)
+        public IActionResult CreateItinerary(string name, decimal startingLatitude, decimal startingLongitude)
         {
             Itinerary itinerary = new Itinerary()
             {
                 Name = name,
-                ID = itineraryDAL.GetNextItineraryId()
+                ID = itineraryDAL.GetNextItineraryId(),
+                StartingLatitude = startingLatitude,
+                StartingLongitude = startingLongitude
             };
             //itinerary.RemainingLandmarks = itineraryDAL.GetAllLandmarksByItineraryId(itinerary.ID);
 
-            int result = itineraryDAL.CreateItinerary(itinerary.ID, itinerary.Name);
+            User user = authProvider.GetCurrentUser();
 
-            return RedirectToAction("Itinerary", itinerary.ID);
+            int result = itineraryDAL.CreateItinerary(itinerary.ID, itinerary.Name, user.ID, itinerary.StartingLatitude, itinerary.StartingLongitude);
+
+            return RedirectToAction("Itinerary", new { id = itinerary.ID });
+
+            // TODO: Figure out why Itinerary controller action is reading in a 0 for ID
         }
 
         [HttpGet]
@@ -191,8 +195,63 @@ namespace Capstone.Controllers
         {
             Itinerary itinerary = itineraryDAL.GetItineraryById(id);
 
-            return View(itinerary);
+            ItineraryViewModel ivm = new ItineraryViewModel()
+            {
+                Itinerary = itinerary,
+                AllLandmarks = landmarkDAL.GetAllLandmarks()
+            };
+
+            return View(ivm);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddLandmarkToItinerary(int landmarkId, int itineraryId)
+        {
+            int numberOfLandmarksForThisItinerary = itineraryDAL.GetNumberOfLandmarksForItinerary(itineraryId);
+            int numberOfUpdates = 0;
+            Itinerary itinerary = new Itinerary();
+            ItineraryViewModel ivm = new ItineraryViewModel();
+
+            if (numberOfLandmarksForThisItinerary == 0)
+            {
+                numberOfUpdates = itineraryDAL.AssignLandmarkToBlankItinerary(landmarkId, itineraryId);
+            }
+            else
+            {
+                itinerary = itineraryDAL.GetLastItinerary(itineraryId);
+                numberOfUpdates = itineraryDAL.AppendLandmarkToItinerary(itineraryId, landmarkId, itinerary.LastVisitNumber, itinerary.StartingLatitude, itinerary.StartingLongitude);
+            }
+
+            itinerary = itineraryDAL.GetItineraryById(itineraryId);
+            List<Landmark> landmarks = landmarkDAL.GetAllLandmarks();
+
+            ivm.Itinerary = itinerary;
+            ivm.AllLandmarks = landmarks;
+
+            return RedirectToAction("Itinerary", new { id = itineraryId });
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult DeleteLandmarkFromItinerary(int itineraryId, int visitOrder)
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult MoveLandmarkUpOnItinerary(int itineraryId, int visitOrder)
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult MoveLandmarkDownOnItinerary(int itineraryId, int visitOrder)
+        //{
+        //    return View();
+        //}
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]

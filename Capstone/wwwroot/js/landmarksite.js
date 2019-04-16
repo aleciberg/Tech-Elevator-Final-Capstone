@@ -1,4 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
@@ -224,6 +224,19 @@ function myFunction() {
         navbar.classList.remove("sticky");
     }
 }
+
+//function saveItinerary() {
+//    var itineraryName = document.getElementById("itineraryName").innerText;
+//    var itineraryId = document.getElementById("itineraryId").innerText;
+//    var itineraryStartLat = document.getElementById("itineraryStartLat").innerText;
+//    var itineraryStartLon = document.getElementById("itineraryStartLon").innerText;
+//    var itineraryEmail = document.getElementById("itineraryEmail").innerText;
+
+   
+//}
+
+
+
 
 function initializeSortableLandmarks() {
     var itineraryLandmarks = document.getElementById('itineraryLandmarks');

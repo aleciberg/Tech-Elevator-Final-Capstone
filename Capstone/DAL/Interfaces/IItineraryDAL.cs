@@ -10,7 +10,11 @@ namespace Capstone.DAL.Interfaces
     {
         Itinerary GetItineraryById(int id);
         int GetNextItineraryId();
-        int CreateItinerary(int id, string name);
+        int CreateItinerary(int id, string name, int userId, decimal lat, decimal lon);
         List<Landmark> GetAllLandmarksByItineraryIdOrderedByVisitOrder(int itineraryId);
+        int GetNumberOfLandmarksForItinerary(int itineraryId);
+        int AssignLandmarkToBlankItinerary(int itineraryId, int landmarkId);
+        Itinerary GetLastItinerary(int itineraryId);
+        int AppendLandmarkToItinerary(int itineraryId, int landmarkId, int visitOrder, decimal lat, decimal lon);
     }
 }
