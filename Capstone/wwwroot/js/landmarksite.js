@@ -3,23 +3,19 @@
 
 // Write your JavaScript code.
 
-if (window.map == null) {
-    window.map;
-    window.marker = false;
-    window.mapRadius;
-}
+window.map;
+window.marker = false;
+window.mapRadius;
+window.home_lat;
+window.home_lon;
 
-if (window.home_lat == null) {
-    window.home_lat; //default values
-    window.home_lon; //default values
-}
-if (window.distanceElements == null) {
-    window.distanceElements = [];
-}
+window.itineraryMap;
+window.itineraryMarker = false;
+window.itinerary_lat;
+window.itinerary_lon;
 
-if (window.searchRadius == null) {
-    window.searchRadius = 15;
-}
+window.distanceElements = [];
+window.searchRadius = 15;
 
 function initMap() {
     if (navigator.geolocation) {
@@ -60,6 +56,39 @@ function initMap() {
     showAllLandmarkMarkersOnSearchMap();
 }
 
+function initItineraryMap() {
+    window.itinerary_lat = +document.getElementById("itineraryStartingLatitude").value; //unary (+) coerces value into a number
+    window.itinerary_lon = +document.getElementById("itineraryStartingLongitude").value; //unary (+) coerces value into a number
+
+    //The center location of our map.
+    var centerOfMap = new google.maps.LatLng(window.itinerary_lat, window.itinerary_lon);
+
+    //Map options.
+    var options = {
+        center: centerOfMap, //Set center.
+        zoom: 10 //The zoom value.
+    };
+
+    //Create the map object.
+    window.itineraryMap = new google.maps.Map(document.getElementById('itineraryMap'), options);
+
+    window.itineraryMarker = new google.maps.Marker({
+        position: { lat: window.itinerary_lat, lng: window.itinerary_lon },
+        map: window.itineraryMap,
+        animation: google.maps.Animation.DROP,
+        draggable: false,
+        title: 'Itinerary starting point'
+    });
+
+    //Listen for any clicks on the map.
+    google.maps.event.addListener(window.itineraryMap, 'click', function (event) {
+        updateStartLocationOfItinerary(event);
+    });
+
+    google.maps.event.addDomListener(window, 'load', initItineraryMap);
+}
+
+
 function updateStartLocationOnMap(event) {
     //Get the location that the user clicked.
     var clickedLocation = event.latLng;
@@ -71,6 +100,13 @@ function updateStartLocationOnMap(event) {
     //showAllLandmarkMarkersOnSearchMap();
 }
 
+function updateStartLocationOfItinerary(event) {
+    //Get the location that the user clicked.
+    var clickedLocation = event.latLng;
+    itineraryMarker.setPosition(clickedLocation);
+
+    setItineraryMarkerLatLon();
+}
 
 function setMarkerToCurrentLocation() {
     window.marker = new google.maps.Marker({
@@ -109,6 +145,18 @@ function setHomeMarkerLatLon() {
     window.home_lat = currentLocation.lat(); //latitude
     window.home_lon = currentLocation.lng(); //longitude
 }
+
+function setItineraryMarkerLatLon() {
+    //Get location.
+    var startingLocation = itineraryMarker.getPosition();
+    //Add lat and lng values to a field that we can save.
+    window.itinerary_lat = startingLocation.lat(); //latitude
+    window.itinerary_lon = startingLocation.lng(); //longitude
+
+    document.getElementById("itineraryStartingLatitude").value = window.itinerary_lat;
+    document.getElementById("itineraryStartingLongitude").value = window.itinerary_lon;
+}
+
 
 function showAllLandmarkMarkersOnSearchMap() {
     distanceElements.forEach(item => {
@@ -190,7 +238,6 @@ function indexSearch(number) {
             hideDiv(item.ElementDiv);
         }
     });
-
     setRadiusOnMap();
 }
 
@@ -232,7 +279,7 @@ function myFunction() {
 //    var itineraryStartLon = document.getElementById("itineraryStartLon").innerText;
 //    var itineraryEmail = document.getElementById("itineraryEmail").innerText;
 
-   
+
 //}
 
 

@@ -73,6 +73,12 @@ section {
     margin: auto;
 }
 
+#itineraryMap {
+    width: 1100px;
+    height: 300px;
+    margin: auto;
+}
+
 .index_landmark {
     padding: 20px 40px 40px;
     display: flex;
