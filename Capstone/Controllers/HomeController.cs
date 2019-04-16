@@ -265,15 +265,14 @@ namespace Capstone.Controllers
             return RedirectToAction("Itinerary", new { id = itineraryId });
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult RenameItinerary(Itinerary itinerary, string name)
-        //{
-        //    Itinerary newItinerary = itinerary;
-        //    newItinerary.Name = name;
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RenameItinerary(int itineraryId, string newItineraryName)
+        {
+            itineraryDAL.UpdateItineraryName(itineraryId, newItineraryName);
 
-        //    return RedirectToAction("Itinerary", newItinerary);
-        //}
+            return RedirectToAction("Itinerary", new { id = itineraryId });
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
