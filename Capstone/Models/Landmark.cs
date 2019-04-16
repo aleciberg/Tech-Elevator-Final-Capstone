@@ -46,5 +46,10 @@ namespace Capstone.Models
 
         [Display(Name = "Image URL")]
         public string ImageLocation { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return (this.ID == ((Landmark)obj).ID);
+        }
     }
 }

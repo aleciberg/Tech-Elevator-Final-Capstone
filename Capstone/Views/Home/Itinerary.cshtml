@@ -54,7 +54,7 @@
 </div>
 
 <div id="itineraryLandmarks">
-    @foreach (Landmark landmark in Model.AllLandmarks)
+    @foreach (Landmark landmark in Model.UnusedLandmarks)
     {
         <span>@landmark.Name</span>
         <form asp-action="AddLandmarkToItinerary" asp-controller="Home" method="post">
@@ -67,7 +67,7 @@
 
 <form asp-action="DeleteItinerary" asp-controller="Home" method="post">
     <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
-    <button type="submit">Delete</button>
+    <button type="submit">Delete Itinerary</button>
 </form>
 
 @*<script src="~/js/Sortable/Sortable.js">
