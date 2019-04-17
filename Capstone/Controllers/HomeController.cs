@@ -18,17 +18,17 @@ namespace Capstone.Controllers
         private readonly IAuthProvider authProvider;
         private readonly IUsersDAL usersDAL;
         private readonly IItineraryDAL itineraryDAL;
-        private readonly IReviewDAL reviewDAL;
+        //private readonly IReviewDAL reviewDAL;
         public static string SessionKey = "Auth_User";
 
 
-        public HomeController(ILandmarkSqlDAL landmarkDAL, IAuthProvider authProvider, IUsersDAL usersDAL, IItineraryDAL itineraryDAL, IReviewDAL reviewDAL)
+        public HomeController(ILandmarkSqlDAL landmarkDAL, IAuthProvider authProvider, IUsersDAL usersDAL, IItineraryDAL itineraryDAL/*, IReviewDAL reviewDAL*/)
         {
             this.landmarkDAL = landmarkDAL;
             this.authProvider = authProvider;
             this.usersDAL = usersDAL;
             this.itineraryDAL = itineraryDAL;
-            this.reviewDAL = reviewDAL;
+            //this.reviewDAL = reviewDAL;
         }
 
         private void SetSession()
@@ -52,7 +52,7 @@ namespace Capstone.Controllers
             SetSession();
 
             Landmark landmark = landmarkDAL.GetLandmarkFromID(id);
-            landmark.Reviews = reviewDAL.GetLandmarkReviewsById(id);
+            //landmark.Reviews = reviewDAL.GetLandmarkReviewsById(id);
 
             return View(landmark);
         }
@@ -81,7 +81,7 @@ namespace Capstone.Controllers
         {
             SetSession();
 
-            landmark.Reviews = null;
+            //landmark.Reviews = null;
 
             User user = authProvider.GetCurrentUser();
 
@@ -103,13 +103,13 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult AddLandmarkReview()
-        {
-            SetSession();
+        //[HttpGet]
+        //public IActionResult AddLandmarkReview()
+        //{
+        //    SetSession();
 
-            return View();
-        }
+        //    return View();
+        //}
 
         //[HttpPost]
         //public IActionResult AddLandmarkReview(Landmark landmark)
