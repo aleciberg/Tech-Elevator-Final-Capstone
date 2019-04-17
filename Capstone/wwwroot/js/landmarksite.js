@@ -8,14 +8,15 @@ window.marker = false;
 window.mapRadius;
 window.home_lat;
 window.home_lon;
+window.distanceElements = [];
+window.searchRadius = 15;
 
 window.itineraryMap;
 window.itineraryMarker = false;
 window.itinerary_lat;
 window.itinerary_lon;
+window.itinerary_landmarks = [];
 
-window.distanceElements = [];
-window.searchRadius = 15;
 
 function initMap() {
     if (navigator.geolocation) {
@@ -86,8 +87,8 @@ function initItineraryMap() {
     });
 
     google.maps.event.addDomListener(window, 'load', initItineraryMap);
+    placeItineraryLandmarksOnMap();
 }
-
 
 function updateStartLocationOnMap(event) {
     //Get the location that the user clicked.
@@ -157,6 +158,25 @@ function setItineraryMarkerLatLon() {
     document.getElementById("itineraryStartingLongitude").value = window.itinerary_lon;
 }
 
+function clearItineraryLandmarks() {
+    window.itinerary_landmarks = [];
+}
+
+function addLandmarkToItineraryMap(landmark) {
+    window.itinerary_landmarks.push(landmark);
+}
+
+function placeItineraryLandmarksOnMap() {
+    window.itinerary_landmarks.forEach(item => {
+        new google.maps.Marker({
+            position: { lat: item.Latitude, lng: item.Longitude },
+            map: window.itineraryMap,
+            icon: '/images/landmark.png',
+            draggable: false,
+            title: item.Name
+        });
+    });
+}
 
 function showAllLandmarkMarkersOnSearchMap() {
     distanceElements.forEach(item => {
@@ -203,9 +223,8 @@ function updateAllDistanceElements() {
 }
 
 function updateElementDistance(elementDiv, element, latitude, longitude) {
-    const distanceToLocationElement = document.getElementById(element.id);
     let distance = distanceFromCurrentLocationInMiles(latitude, longitude);
-    distanceToLocationElement.innerText = distanceString(distance);
+    element.innerText = distanceString(distance);
 }
 
 function addDistanceElement(elementDiv, element, latitude, longitude) {
@@ -242,13 +261,11 @@ function indexSearch(number) {
 }
 
 function hideDiv(element) {
-    var divElement = document.getElementById(element.id);
-    divElement.style.display = "none";
+    element.style.display = "none";
 }
 
 function showDiv(element) {
-    var divElement = document.getElementById(element.id);
-    divElement.style.display = "flex";
+    element.style.display = "flex";
 }
 
 function showDistanceCalculations() {
@@ -261,7 +278,6 @@ function showDistanceCalculations() {
 //NavBar Things
 window.onscroll = function () { myFunction() };
 
-
 function myFunction() {
     var navbar = document.getElementById("navbar");
     var sticky = navbar.offsetTop;
@@ -271,36 +287,4 @@ function myFunction() {
         navbar.classList.remove("sticky");
     }
 }
-
-//function saveItinerary() {
-//    var itineraryName = document.getElementById("itineraryName").innerText;
-//    var itineraryId = document.getElementById("itineraryId").innerText;
-//    var itineraryStartLat = document.getElementById("itineraryStartLat").innerText;
-//    var itineraryStartLon = document.getElementById("itineraryStartLon").innerText;
-//    var itineraryEmail = document.getElementById("itineraryEmail").innerText;
-
-
-//}
-
-
-
-
-//function initializeSortableLandmarks() {
-//    var itineraryLandmarks = document.getElementById('itineraryLandmarks');
-//    new Sortable(itineraryLandmarks, {
-//        group: "landmarks",
-//        handle: ".my-handle",
-//        draggable: ".item",
-//        ghostClass: "sortable-ghost",
-//        onAdd: function (evt) {
-//            var itemEl = evt.item;
-//        },
-//        onUpdate: function (evt) {
-//            var itemEl = evt.item; // the current dragged HTMLElement
-//        },
-//        onRemove: function (evt) {
-//            var itemEl = evt.item;
-//        }
-//    });
-//}
 
