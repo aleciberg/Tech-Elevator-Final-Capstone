@@ -42,10 +42,20 @@ section {
         font-size: 17px;
     }
 
-        #navbar a:hover {
-            background-color: grey;
-            color: white;
-        }
+#navbarLandmarkAddition {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+#navbar a:hover {
+    background-color: grey;
+    color: white;
+}
 
 #loginRegister {
     float: right !important;
@@ -185,13 +195,13 @@ section {
     display: flex;
 }
 
-#itineraryLandmarkUpDown{
+#itineraryLandmarkUpDown {
     display: inline-block;
 }
 
-#itineraryLandmarkUpDown > div {
-    display: inline-block;
-}
+    #itineraryLandmarkUpDown > div {
+        display: inline-block;
+    }
 
 #itineraryLandmarkDelete {
     display: inline-block;
@@ -218,6 +228,6 @@ section {
     flex-direction: column;
 }
 
-    #itineraryLandmarkAddToItinerary {
-        display: inline-block;
-    }
+#itineraryLandmarkAddToItinerary {
+    display: inline-block;
+}
