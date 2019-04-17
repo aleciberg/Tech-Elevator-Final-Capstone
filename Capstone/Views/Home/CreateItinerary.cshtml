@@ -4,9 +4,8 @@
     ViewData["Title"] = "CreateItinerary";
 }
 
-<h2>CreateItinerary</h2>
+<h2>Create New Itinerary</h2>
 
-<h4>Itinerary</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -17,7 +16,7 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="StartingLatitude" class="control-label"></label>
                 <input asp-for="StartingLatitude" class="form-control" />
                 <span asp-validation-for="StartingLatitude" class="text-danger"></span>
@@ -26,7 +25,7 @@
                 <label asp-for="StartingLongitude" class="control-label"></label>
                 <input asp-for="StartingLongitude" class="form-control" />
                 <span asp-validation-for="StartingLongitude" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

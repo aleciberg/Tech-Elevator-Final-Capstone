@@ -199,7 +199,7 @@ namespace Capstone.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateItinerary(string name, decimal startingLatitude, decimal startingLongitude)
+        public IActionResult CreateItinerary(string name/*, decimal startingLatitude, decimal startingLongitude*/)
         {
             SetSession();
 
@@ -207,8 +207,8 @@ namespace Capstone.Controllers
             {
                 Name = name,
                 ID = itineraryDAL.GetNextItineraryId(),
-                StartingLatitude = startingLatitude,
-                StartingLongitude = startingLongitude
+                StartingLatitude = 39.961904M,
+                StartingLongitude = -82.998965M
             };
             //itinerary.RemainingLandmarks = itineraryDAL.GetAllLandmarksByItineraryId(itinerary.ID);
 
