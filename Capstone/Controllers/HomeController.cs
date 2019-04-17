@@ -18,15 +18,17 @@ namespace Capstone.Controllers
         private readonly IAuthProvider authProvider;
         private readonly IUsersDAL usersDAL;
         private readonly IItineraryDAL itineraryDAL;
+        private readonly IReviewDAL reviewDAL;
         public static string SessionKey = "Auth_User";
 
 
-        public HomeController(ILandmarkSqlDAL landmarkDAL, IAuthProvider authProvider, IUsersDAL usersDAL, IItineraryDAL itineraryDAL)
+        public HomeController(ILandmarkSqlDAL landmarkDAL, IAuthProvider authProvider, IUsersDAL usersDAL, IItineraryDAL itineraryDAL, IReviewDAL reviewDAL)
         {
             this.landmarkDAL = landmarkDAL;
             this.authProvider = authProvider;
             this.usersDAL = usersDAL;
             this.itineraryDAL = itineraryDAL;
+            this.reviewDAL = reviewDAL;
         }
 
         private void SetSession()
@@ -48,7 +50,10 @@ namespace Capstone.Controllers
         public IActionResult Detail(int id)
         {
             SetSession();
+
             Landmark landmark = landmarkDAL.GetLandmarkFromID(id);
+            landmark.Reviews = reviewDAL.GetLandmarkReviewsById(id);
+
             return View(landmark);
         }
 
@@ -74,7 +79,10 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddLandmark(Landmark landmark)
         {
-            //TODO: Add user to model before passing
+            SetSession();
+
+            landmark.Reviews = null;
+
             User user = authProvider.GetCurrentUser();
 
             LandmarkUserViewModel luvm = new LandmarkUserViewModel()
@@ -94,6 +102,20 @@ namespace Capstone.Controllers
                 return RedirectToAction("Detail", new { id = newLandmarkID });
             }
         }
+
+        [HttpGet]
+        public IActionResult AddLandmarkReview()
+        {
+            SetSession();
+
+            return View();
+        }
+
+        //[HttpPost]
+        //public IActionResult AddLandmarkReview(Landmark landmark)
+        //{
+
+        //}
 
         [HttpGet]
         public IActionResult Register()
@@ -135,6 +157,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            SetSession();
             return View();
         }
 
@@ -142,6 +165,8 @@ namespace Capstone.Controllers
         [HttpPost]
         public IActionResult Login(LoginViewModel lvm)
         {
+            SetSession();
+
             if (ModelState.IsValid)
             {
                 bool validLogin = authProvider.SignIn(lvm.Email, lvm.Password);
@@ -157,6 +182,8 @@ namespace Capstone.Controllers
         [HttpGet]
         public IActionResult LogOff()
         {
+            SetSession();
+
             authProvider.LogOff();
 
             return RedirectToAction("Index", "Home");
@@ -165,6 +192,8 @@ namespace Capstone.Controllers
         [HttpGet]
         public IActionResult CreateItinerary()
         {
+            SetSession();
+
             return View();
         }
 
@@ -172,6 +201,8 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateItinerary(string name, decimal startingLatitude, decimal startingLongitude)
         {
+            SetSession();
+
             Itinerary itinerary = new Itinerary()
             {
                 Name = name,
@@ -193,6 +224,8 @@ namespace Capstone.Controllers
         [HttpGet]
         public IActionResult Itinerary(int id)
         {
+            SetSession();
+
             Itinerary itinerary = itineraryDAL.GetItineraryById(id);
 
             ItineraryViewModel ivm = new ItineraryViewModel()
@@ -208,6 +241,8 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddLandmarkToItinerary(int landmarkId, int itineraryId)
         {
+            SetSession();
+
             int numberOfLandmarksForThisItinerary = itineraryDAL.GetNumberOfLandmarksForItinerary(itineraryId);
             int numberOfUpdates = 0;
             Itinerary itinerary = new Itinerary();
@@ -236,6 +271,8 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteLandmarkFromItinerary(int itineraryId, int landmarkId, int visitOrderOfRemovedLandmark)
         {
+            SetSession();
+
             itineraryDAL.RemoveLandmarkFromItinerary(itineraryId, landmarkId, visitOrderOfRemovedLandmark);
             return RedirectToAction("Itinerary", new { id = itineraryId });
         }
@@ -244,6 +281,8 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult MoveLandmarkUpOnItinerary(int itineraryId, int landmarkId, int fromPosition)
         {
+            SetSession();
+
             List<Landmark> originalList = itineraryDAL.GetAllLandmarksByItineraryIdOrderedByVisitOrder(itineraryId);
 
             Landmark temp = originalList[fromPosition - 1];
@@ -257,6 +296,8 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult MoveLandmarkDownOnItinerary(int itineraryId, int landmarkId, int fromPosition)
         {
+            SetSession();
+
             List<Landmark> originalList = itineraryDAL.GetAllLandmarksByItineraryIdOrderedByVisitOrder(itineraryId);
 
             Landmark temp = originalList[fromPosition + 1];
@@ -270,6 +311,8 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult RenameItinerary(int itineraryId, string newItineraryName)
         {
+            SetSession();
+
             itineraryDAL.UpdateItineraryName(itineraryId, newItineraryName);
 
             return RedirectToAction("Itinerary", new { id = itineraryId });
@@ -280,6 +323,8 @@ namespace Capstone.Controllers
 
         public IActionResult ChangeItineraryStartingLatLon(int itineraryId, string itineraryStartingLatitude, string itineraryStartingLongitude)
         {
+            SetSession();
+
             itineraryDAL.UpdateItineraryStartingLocation(itineraryId, Convert.ToDecimal(itineraryStartingLatitude), Convert.ToDecimal(itineraryStartingLongitude));
 
             return RedirectToAction("Itinerary", new { id = itineraryId });
@@ -289,6 +334,8 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteItinerary(int itineraryId)
         {
+            SetSession();
+
             int result = itineraryDAL.DeleteItinerary(itineraryId);
             return RedirectToAction("Index");
         }
@@ -296,6 +343,8 @@ namespace Capstone.Controllers
         [HttpGet]
         public IActionResult ItineraryListByUser()
         {
+            SetSession();
+
             User user = authProvider.GetCurrentUser();
 
             List<Itinerary> itineraries = itineraryDAL.GetAllItinerariesByUser(user.ID);
