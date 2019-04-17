@@ -172,12 +172,34 @@ section {
     display: flex;
 }
 
-#itineraryLandmarkDiv {
-    display: flex;
-    flex-direction: row;
+#itineraryLandmarkUpDown{
+    display: inline-block;
 }
 
-#itineraryLandmarkUpDown{
+#itineraryLandmarkUpDown > div {
+    display: inline-block;
+}
+
+#itineraryLandmarkDelete {
+    display: inline-block;
+}
+
+#itineraryName {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#itineraryImageThumbnail {
+    height: 100px;
+    width: 100px;
+    padding: 5px;
+}
+
+#itineraryUnusedLandmarks {
     display: flex;
     flex-direction: column;
 }
+
+    #itineraryLandmarkAddToItinerary {
+        display: inline-block;
+    }
