@@ -4,11 +4,14 @@ GO
 --ALTER TABLE [dbo].[itinerary] DROP CONSTRAINT [fk_landmark_id];
 --ALTER TABLE [dbo].[itinerary_user] DROP CONSTRAINT [fk_itinerary_id];
 --ALTER TABLE [dbo].[itinerary_user] DROP CONSTRAINT [fk_user_id];
+--ALTER TABLE [dbo].[review] DROP CONSTRAINT [fk_review_landmark_id];
 
 --DROP TABLE [dbo].[landmark];
 --DROP TABLE [dbo].[users];
 --DROP TABLE [dbo].[itinerary];
 --DROP TABLE [dbo].[itinerary_user];
+--DROP TABLE [dbo].[itinerary_name];
+--DROP TABLE [dbo].[review];
 
 USE master;
 GO
@@ -82,6 +85,18 @@ CREATE TABLE itinerary_user (
 	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
 );
 
+CREATE TABLE review (
+	review_id integer identity NOT NULL,
+	landmark_id integer NOT NULL,
+	username varchar(50) NOT NULL,
+	subject varchar(200),
+	message varchar(1000),
+	post_date datetime default getdate(),
+	
+	CONSTRAINT pk_review_review_id PRIMARY KEY (review_id),
+	CONSTRAINT fk_review_landmark_id FOREIGN KEY (landmark_id) REFERENCES landmark(landmark_id),
+)
+
 SET IDENTITY_INSERT landmark ON;
 
 INSERT INTO landmark (landmark_id, submitter_id, name, category, description, address, city, state, zip, latitude, longitude, hours_of_operation, image_location) VALUES (1, 1, 'Shrum Mound', 'Cemetery', 'Come and see one of the last ancient cone-shaped burial mounds remaining in Columbus, located in one-acre Campbell Park. Shrum Mound is a 20-foot-high and 100-foot-diameter mound built by people of the ancient Adena culture (800 B.C.–A.D. 100).', '3141 McKinley Ave', 'Columbus', 'OH', 43204, 39.989985, -83.080465, 'All Daylight Hours', 'Shrum_Mound_4_70000490.jpg');
@@ -117,5 +132,16 @@ INSERT INTO itinerary_user (itinerary_id, user_id) VALUES (3, 1);
 INSERT INTO itinerary_name (itinerary_id, itinerary_name) VALUES (1, 'Saturday Trip!')
 INSERT INTO itinerary_name (itinerary_id, itinerary_name) VALUES (2, 'Family Fun')
 INSERT INTO itinerary_name (itinerary_id, itinerary_name) VALUES (3, 'First Date')
+
+SET IDENTITY_INSERT review ON;
+
+INSERT INTO review (review_id, landmark_id, username, subject, message, post_date) VALUES (1, 1, 'mackenziejones', 'Amazing', 'I cannot say enough about the Shrum Mound. It is the most amazing landmark I have EVER seen.', getdate());
+INSERT INTO review (review_id, landmark_id, username, subject, message, post_date) VALUES (2, 2, 'kylethomas', 'Seen better', 'Literally just a zoo, not really that impressive.', getdate());
+INSERT INTO review (review_id, landmark_id, username, subject, message, post_date) VALUES (3, 3, 'mackenziejones', 'Pretty', 'There are so many pretty flowers! Will definitely be back again.', getdate());
+INSERT INTO review (review_id, landmark_id, username, subject, message, post_date) VALUES (4, 4, 'aleciberg', 'Breathtaking', 'Seriously breathtaking boulder, the alpha of all large rocks.', getdate());
+INSERT INTO review (review_id, landmark_id, username, subject, message, post_date) VALUES (5, 5, 'davidvanderburgh', 'Terrible', 'Not a great park for a walk, had bad sidewalks.', getdate());
+INSERT INTO review (review_id, landmark_id, username, subject, message, post_date) VALUES (6, 6, 'aleciberg', 'Straight insanity', 'It was really cool to see crazy people graves. I feel crazier already!', getdate());
+
+SET IDENTITY_INSERT review OFF;
 
 COMMIT;
