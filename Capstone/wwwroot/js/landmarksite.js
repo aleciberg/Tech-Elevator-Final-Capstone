@@ -8,14 +8,15 @@ window.marker = false;
 window.mapRadius;
 window.home_lat;
 window.home_lon;
+window.distanceElements = [];
+window.searchRadius = 15;
 
 window.itineraryMap;
 window.itineraryMarker = false;
 window.itinerary_lat;
 window.itinerary_lon;
+window.itinerary_landmarks = [];
 
-window.distanceElements = [];
-window.searchRadius = 15;
 
 function initMap() {
     if (navigator.geolocation) {
@@ -57,6 +58,8 @@ function initMap() {
 }
 
 function initItineraryMap() {
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
     window.itinerary_lat = +document.getElementById("itineraryStartingLatitude").value; //unary (+) coerces value into a number
     window.itinerary_lon = +document.getElementById("itineraryStartingLongitude").value; //unary (+) coerces value into a number
 
@@ -72,6 +75,8 @@ function initItineraryMap() {
     //Create the map object.
     window.itineraryMap = new google.maps.Map(document.getElementById('itineraryMap'), options);
 
+    directionsDisplay.setMap(window.itineraryMap);
+
     window.itineraryMarker = new google.maps.Marker({
         position: { lat: window.itinerary_lat, lng: window.itinerary_lon },
         map: window.itineraryMap,
@@ -86,8 +91,48 @@ function initItineraryMap() {
     });
 
     google.maps.event.addDomListener(window, 'load', initItineraryMap);
+    placeItineraryLandmarksOnMap();
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
 }
 
+function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    var waypts = [];
+    window.itinerary_landmarks.forEach(item => {
+        waypts.push({
+            location: { lat: item.Latitude, lng: item.Longitude },
+            stopover: true
+        });
+    });
+
+    var lastLandmark = window.itinerary_landmarks[window.itinerary_landmarks.length - 1];
+
+    directionsService.route({
+        origin: { lat: window.itinerary_lat, lng: window.itinerary_lon },
+        destination: { lat: lastLandmark.Latitude, lng: lastLandmark.Longitude },
+        waypoints: waypts,
+        optimizeWaypoints: false,
+        travelMode: 'DRIVING'
+    }, function (response, status) {
+        if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+
+            var route = response.routes[0];
+            var summaryPanel = document.getElementById('itineraryRoute');
+            summaryPanel.innerHTML = '';
+            // For each route, display summary information.
+            for (var i = 0; i < route.legs.length - 1; i++) {
+                var routeSegment = i + 1;
+                summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+                    '</b><br>';
+                summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+                summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+                summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+            }
+        } else {
+            window.alert('Directions request failed due to ' + status);
+        }
+    });
+}
 
 function updateStartLocationOnMap(event) {
     //Get the location that the user clicked.
@@ -157,6 +202,25 @@ function setItineraryMarkerLatLon() {
     document.getElementById("itineraryStartingLongitude").value = window.itinerary_lon;
 }
 
+function clearItineraryLandmarks() {
+    window.itinerary_landmarks = [];
+}
+
+function addLandmarkToItineraryMap(landmark) {
+    window.itinerary_landmarks.push(landmark);
+}
+
+function placeItineraryLandmarksOnMap() {
+    window.itinerary_landmarks.forEach(item => {
+        new google.maps.Marker({
+            position: { lat: item.Latitude, lng: item.Longitude },
+            map: window.itineraryMap,
+            icon: '/images/landmark.png',
+            draggable: false,
+            title: item.Name
+        });
+    });
+}
 
 function showAllLandmarkMarkersOnSearchMap() {
     distanceElements.forEach(item => {
@@ -203,9 +267,8 @@ function updateAllDistanceElements() {
 }
 
 function updateElementDistance(elementDiv, element, latitude, longitude) {
-    const distanceToLocationElement = document.getElementById(element.id);
     let distance = distanceFromCurrentLocationInMiles(latitude, longitude);
-    distanceToLocationElement.innerText = distanceString(distance);
+    element.innerText = distanceString(distance);
 }
 
 function addDistanceElement(elementDiv, element, latitude, longitude) {
@@ -242,13 +305,11 @@ function indexSearch(number) {
 }
 
 function hideDiv(element) {
-    var divElement = document.getElementById(element.id);
-    divElement.style.display = "none";
+    element.style.display = "none";
 }
 
 function showDiv(element) {
-    var divElement = document.getElementById(element.id);
-    divElement.style.display = "flex";
+    element.style.display = "flex";
 }
 
 function showDistanceCalculations() {
@@ -261,7 +322,6 @@ function showDistanceCalculations() {
 //NavBar Things
 window.onscroll = function () { myFunction() };
 
-
 function myFunction() {
     var navbar = document.getElementById("navbar");
     var sticky = navbar.offsetTop;
@@ -271,36 +331,4 @@ function myFunction() {
         navbar.classList.remove("sticky");
     }
 }
-
-//function saveItinerary() {
-//    var itineraryName = document.getElementById("itineraryName").innerText;
-//    var itineraryId = document.getElementById("itineraryId").innerText;
-//    var itineraryStartLat = document.getElementById("itineraryStartLat").innerText;
-//    var itineraryStartLon = document.getElementById("itineraryStartLon").innerText;
-//    var itineraryEmail = document.getElementById("itineraryEmail").innerText;
-
-
-//}
-
-
-
-
-//function initializeSortableLandmarks() {
-//    var itineraryLandmarks = document.getElementById('itineraryLandmarks');
-//    new Sortable(itineraryLandmarks, {
-//        group: "landmarks",
-//        handle: ".my-handle",
-//        draggable: ".item",
-//        ghostClass: "sortable-ghost",
-//        onAdd: function (evt) {
-//            var itemEl = evt.item;
-//        },
-//        onUpdate: function (evt) {
-//            var itemEl = evt.item; // the current dragged HTMLElement
-//        },
-//        onRemove: function (evt) {
-//            var itemEl = evt.item;
-//        }
-//    });
-//}
 
