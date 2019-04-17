@@ -18,8 +18,6 @@
 
 <p>Click the map to change your starting location.</p>
 
-<a asp-controller="Home" asp-action="ItineraryListByUser"><div>View Your Past Itineraries</div></a>
-
 @foreach (Landmark landmark in Model)
 {
     var landmarkDiv = "landmarkDiv" + landmark.ID;
