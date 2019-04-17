@@ -73,10 +73,23 @@ section {
     margin: auto;
 }
 
-#itineraryMap {
+#itineraryMapAndRoute {
     width: 1100px;
+    display: flex;
+    flex-direction: row;
+}
+
+#itineraryMap {
+    width: 800px;
     height: 300px;
     margin: auto;
+}
+
+#itineraryRoute {
+    width: 300px;
+    height: 300px;
+    overflow: auto;
+    margin-left: 15px;
 }
 
 .index_landmark {
@@ -172,12 +185,39 @@ section {
     display: flex;
 }
 
-#itineraryLandmarkDiv {
-    display: flex;
-    flex-direction: row;
+#itineraryLandmarkUpDown{
+    display: inline-block;
 }
 
-#itineraryLandmarkUpDown{
+#itineraryLandmarkUpDown > div {
+    display: inline-block;
+}
+
+#itineraryLandmarkDelete {
+    display: inline-block;
+}
+
+#itineraryName {
+    display: inline-block;
+    margin-right: 10px;
+    min-width: 550px;
+}
+
+#itineraryImageThumbnail {
+    height: 100px;
+    width: 100px;
+    padding: 5px;
+}
+
+#deleteItinerary {
+    margin-top: 30px;
+}
+
+#itineraryUnusedLandmarks {
     display: flex;
     flex-direction: column;
 }
+
+    #itineraryLandmarkAddToItinerary {
+        display: inline-block;
+    }

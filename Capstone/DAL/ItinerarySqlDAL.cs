@@ -182,8 +182,8 @@ namespace Capstone.DAL
                     landmark.ZipCode = Convert.ToString(reader["zip"]);
                     landmark.Latitude = Convert.ToDecimal(reader["latitude"]);
                     landmark.Longitude = Convert.ToDecimal(reader["longitude"]);
-                    landmark.HoursOfOperation = Convert.ToString(reader["category"]);
-                    landmark.ImageLocation = Convert.ToString(reader["category"]);
+                    landmark.HoursOfOperation = Convert.ToString(reader["hours_of_operation"]);
+                    landmark.ImageLocation = Convert.ToString(reader["image_location"]);
 
                     landmarks.Add(landmark);
                 }
