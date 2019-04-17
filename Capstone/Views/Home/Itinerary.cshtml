@@ -99,7 +99,7 @@
                 <h4 id="itineraryName">@landmark.Name</h4>
                 <div id="itineraryLandmarkAddToItinerary">
                     <form asp-action="AddLandmarkToItinerary" asp-controller="Home" method="post">
-                        <button class="btn btn-sm btn-success" type="submit">Add to Itinerary</button>
+                        <button class="btn btn-sm btn-success" type="submit"><i class="fas fa-plus"></i></button>
                         <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
                         <input type="hidden" name="landmarkId" value="@landmark.ID" />
                     </form>
@@ -108,9 +108,11 @@
         }
     </div>
 
+</div>
+<div id="deleteItinerary">
     <form asp-action="DeleteItinerary" asp-controller="Home" method="post">
         <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
-        <button type="submit">Delete Itinerary</button>
+        <button class="btn btn-danger" type="submit">Delete Itinerary</button>
     </form>
 </div>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges&callback=initItineraryMap"></script>
