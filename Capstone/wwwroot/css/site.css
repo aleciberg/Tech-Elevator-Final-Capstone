@@ -88,6 +88,8 @@ section {
 #itineraryRoute {
     width: 300px;
     height: 300px;
+    overflow: auto;
+    margin-left: 15px;
 }
 
 .index_landmark {

@@ -120,7 +120,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             var summaryPanel = document.getElementById('itineraryRoute');
             summaryPanel.innerHTML = '';
             // For each route, display summary information.
-            for (var i = 0; i < route.legs.length; i++) {
+            for (var i = 0; i < route.legs.length - 1; i++) {
                 var routeSegment = i + 1;
                 summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
                     '</b><br>';
