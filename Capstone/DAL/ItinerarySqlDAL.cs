@@ -25,7 +25,7 @@ namespace Capstone.DAL
         private const string SQL_AppendLandmarkToItinerary = "INSERT INTO itinerary VALUES (@itinerary_id, @start_lat, @start_lon, @landmark_id, @visit_order);";
         private const string SQL_RemoveLandmarkFromItinerary = "DELETE FROM itinerary WHERE landmark_id = @landmark_id AND itinerary_id = @itinerary_id; UPDATE itinerary SET visit_order = visit_order - 1 WHERE itinerary_id = @itinerary_id AND visit_order > @visit_order_of_deleted_item;";
         private const string SQL_DeleteItinerary = "DELETE FROM itinerary WHERE itinerary_id = @itinerary_id; DELETE FROM itinerary_name WHERE itinerary_id = @itinerary_id; DELETE FROM itinerary_user WHERE itinerary_id = @itinerary_id;";
-        private const string SQL_GetAllItinerariesByUser = "SELECT itinerary_name,  itinerary.itinerary_id FROM itinerary JOIN itinerary_name ON itinerary.itinerary_id = itinerary_name.itinerary_id JOIN itinerary_user ON itinerary.itinerary_id = itinerary_user.itinerary_id WHERE itinerary_user.user_id = @user_id";
+        private const string SQL_GetAllItinerariesByUser = "SELECT itinerary_name,  itinerary.itinerary_id FROM itinerary JOIN itinerary_name ON itinerary.itinerary_id = itinerary_name.itinerary_id JOIN itinerary_user ON itinerary.itinerary_id = itinerary_user.itinerary_id WHERE itinerary_user.user_id = @user_id GROUP BY itinerary.itinerary_id, itinerary_name;";
 
 
         public ItinerarySqlDAL(string dbConnectionString)
