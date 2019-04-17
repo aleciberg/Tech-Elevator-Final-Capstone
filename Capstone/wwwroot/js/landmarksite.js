@@ -58,6 +58,8 @@ function initMap() {
 }
 
 function initItineraryMap() {
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
     window.itinerary_lat = +document.getElementById("itineraryStartingLatitude").value; //unary (+) coerces value into a number
     window.itinerary_lon = +document.getElementById("itineraryStartingLongitude").value; //unary (+) coerces value into a number
 
@@ -72,6 +74,14 @@ function initItineraryMap() {
 
     //Create the map object.
     window.itineraryMap = new google.maps.Map(document.getElementById('itineraryMap'), options);
+
+    directionsDisplay.setMap(window.itineraryMap);
+
+    //var onChangeHandler = function () {
+    //    calculateAndDisplayRoute(directionsService, directionsDisplay);
+    //};
+    //document.getElementById('start').addEventListener('change', onChangeHandler);
+    //document.getElementById('end').addEventListener('change', onChangeHandler);
 
     window.itineraryMarker = new google.maps.Marker({
         position: { lat: window.itinerary_lat, lng: window.itinerary_lon },
@@ -88,6 +98,33 @@ function initItineraryMap() {
 
     google.maps.event.addDomListener(window, 'load', initItineraryMap);
     placeItineraryLandmarksOnMap();
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
+}
+
+function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    var waypts = [];
+    window.itinerary_landmarks.forEach(item => {
+        waypts.push({
+            location: { lat: item.Latitude, lng: item.Longitude },
+            stopover: true
+        });
+    });
+
+    var lastLandmark = window.itinerary_landmarks[window.itinerary_landmarks.length - 1];
+
+    directionsService.route({
+        origin: { lat: window.itinerary_lat, lng: window.itinerary_lon },
+        destination: { lat: lastLandmark.Latitude, lng: lastLandmark.Longitude },
+        waypoints: waypts,
+        optimizeWaypoints: false,
+        travelMode: 'DRIVING'
+    }, function (response, status) {
+        if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+        } else {
+            window.alert('Directions request failed due to ' + status);
+        }
+    });
 }
 
 function updateStartLocationOnMap(event) {

@@ -31,7 +31,7 @@
     @for (int position = 0; position < Model.Itinerary.LandmarksOrderedByVisitOrder.Count; position++)
     {
         <div id="itineraryLandmarkDiv">
-            <div class="itineraryLandmarkDelete">
+            <div id="itineraryLandmarkDelete">
                 <form asp-action="DeleteLandmarkFromItinerary" asp-controller="Home" method="post">
                     <button type="submit">Remove Landmark</button>
                     <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
@@ -98,7 +98,3 @@
 </form>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges&callback=initItineraryMap"></script>
-
-<script defer>
-    placeItineraryLandmarksOnMap();
-</script>
