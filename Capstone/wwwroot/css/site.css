@@ -171,3 +171,13 @@ section {
 #itineraryLandmark {
     display: flex;
 }
+
+#itineraryLandmarkDiv {
+    display: flex;
+    flex-direction: row;
+}
+
+#itineraryLandmarkUpDown{
+    display: flex;
+    flex-direction: column;
+}
