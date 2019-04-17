@@ -59,7 +59,7 @@ function initMap() {
 
 function initItineraryMap() {
     var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
     window.itinerary_lat = +document.getElementById("itineraryStartingLatitude").value; //unary (+) coerces value into a number
     window.itinerary_lon = +document.getElementById("itineraryStartingLongitude").value; //unary (+) coerces value into a number
 
@@ -76,12 +76,6 @@ function initItineraryMap() {
     window.itineraryMap = new google.maps.Map(document.getElementById('itineraryMap'), options);
 
     directionsDisplay.setMap(window.itineraryMap);
-
-    //var onChangeHandler = function () {
-    //    calculateAndDisplayRoute(directionsService, directionsDisplay);
-    //};
-    //document.getElementById('start').addEventListener('change', onChangeHandler);
-    //document.getElementById('end').addEventListener('change', onChangeHandler);
 
     window.itineraryMarker = new google.maps.Marker({
         position: { lat: window.itinerary_lat, lng: window.itinerary_lon },
@@ -121,6 +115,19 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     }, function (response, status) {
         if (status === 'OK') {
             directionsDisplay.setDirections(response);
+
+            var route = response.routes[0];
+            var summaryPanel = document.getElementById('itineraryRoute');
+            summaryPanel.innerHTML = '';
+            // For each route, display summary information.
+            for (var i = 0; i < route.legs.length; i++) {
+                var routeSegment = i + 1;
+                summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+                    '</b><br>';
+                summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+                summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+                summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+            }
         } else {
             window.alert('Directions request failed due to ' + status);
         }

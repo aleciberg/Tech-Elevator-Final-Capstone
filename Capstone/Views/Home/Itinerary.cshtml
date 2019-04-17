@@ -13,7 +13,10 @@
 
 <p>@Model.Itinerary.ID</p>
 <p>@Model.Itinerary.UserEmail</p>
-<div id="itineraryMap"></div>
+<div id="itineraryMapAndRoute">
+    <div id="itineraryMap"></div>
+    <div id="itineraryRoute"></div>
+</div>
 
 <form asp-action="ChangeItineraryStartingLatLon" asp-controller="Home" method="post">
     <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />

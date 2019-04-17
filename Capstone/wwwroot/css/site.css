@@ -73,10 +73,21 @@ section {
     margin: auto;
 }
 
-#itineraryMap {
+#itineraryMapAndRoute {
     width: 1100px;
+    display: flex;
+    flex-direction: row;
+}
+
+#itineraryMap {
+    width: 800px;
     height: 300px;
     margin: auto;
+}
+
+#itineraryRoute {
+    width: 300px;
+    height: 300px;
 }
 
 .index_landmark {
