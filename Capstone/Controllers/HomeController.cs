@@ -269,12 +269,20 @@ namespace Capstone.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteLandmarkFromItinerary(int itineraryId, int landmarkId, int visitOrderOfRemovedLandmark)
+        public IActionResult DeleteLandmarkFromItinerary(int itineraryId, int landmarkId, int visitOrderOfRemovedLandmark, int itineraryCount)
         {
             SetSession();
 
-            itineraryDAL.RemoveLandmarkFromItinerary(itineraryId, landmarkId, visitOrderOfRemovedLandmark);
-            return RedirectToAction("Itinerary", new { id = itineraryId });
+            if (itineraryCount == 1)
+            {
+                int result = itineraryDAL.DeleteItinerary(itineraryId);
+                return RedirectToAction("ItineraryListByUser");
+            }
+            else
+            {
+                itineraryDAL.RemoveLandmarkFromItinerary(itineraryId, landmarkId, visitOrderOfRemovedLandmark);
+                return RedirectToAction("Itinerary", new { id = itineraryId });
+            }
         }
 
         [HttpPost]
@@ -337,7 +345,7 @@ namespace Capstone.Controllers
             SetSession();
 
             int result = itineraryDAL.DeleteItinerary(itineraryId);
-            return RedirectToAction("Index");
+            return RedirectToAction("ItineraryListByUser");
         }
 
         [HttpGet]

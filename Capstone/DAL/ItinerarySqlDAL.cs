@@ -118,7 +118,15 @@ namespace Capstone.DAL
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand(SQL_GetMaxItineraryId, connection);
-                result = (int)command.ExecuteScalar() + 1;
+                try
+                {
+                    result = (int)command.ExecuteScalar() + 1;
+                }
+                catch (System.InvalidCastException e)
+                {
+                    //only if no itineraries exist, make this one the first
+                    result = 1;
+                }
             }
 
             return result;

@@ -68,6 +68,7 @@
                         <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
                         <input type="hidden" name="landmarkId" value="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID" />
                         <input type="hidden" name="visitOrderOfRemovedLandmark" value="@(position + 1) " />
+                        <input type="hidden" name="itineraryCount" value="@Model.Itinerary.LandmarksOrderedByVisitOrder.Count" />
                     </form>
                 </div>
             </div>
