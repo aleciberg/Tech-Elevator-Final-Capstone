@@ -151,7 +151,7 @@ function initItineraryMap() {
             }
         });
         window.itineraryMap.fitBounds(bounds);
-        window.itineraryMarker.setPosition({ lat: 40, lng: -80}); //TODO: fix this line
+        window.itineraryMarker.setPosition(window.itineraryMap.getCenter());
         setItineraryMarkerLatLon();
     });
 }
