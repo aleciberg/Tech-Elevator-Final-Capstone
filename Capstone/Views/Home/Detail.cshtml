@@ -37,8 +37,6 @@
 <div id="detailBottomBox">
     <h4 id="detailDescription">@Model.Description</h4> <br> <br />
     <div id="detailMap">
-        <iframe width="940" height="400" frameborder="0"
-                src="https://www.google.com/maps/embed/v1/view?zoom=17&center=@Model.Latitude,@Model.Longitude&key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges" allowfullscreen></iframe>
     </div>
 </div>
 <br />
@@ -49,4 +47,9 @@
     <button class="button"><a class="backToList" asp-action="Index" style="text-decoration: none;">Back to List</a></button>
 </div>
 
+<script> 
+    //add detail map marker
+    addDetailMapMarker(@Model.Latitude, @Model.Longitude, '@Model.Name');
+</script>
 
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR3TDgdyT1bGXlPKIG9yF6-7WYX3ewges&callback=initDetailMap"></script>

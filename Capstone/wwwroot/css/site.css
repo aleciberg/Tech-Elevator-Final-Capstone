@@ -211,6 +211,8 @@ section {
 #detailMap {
     margin-left: auto;
     margin-right: auto;
+    width: 940px;
+    height: 400px; 
 }
 
 .list_facts {
