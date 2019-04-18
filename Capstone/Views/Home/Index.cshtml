@@ -13,7 +13,7 @@
                                       onchange="indexSearch(this.value)"
                                       onkeyup="indexSearch(this.value)"
                                       onclick="indexSearch(this.value)"
-                                      value="15" /> miles.
+                                      value="6" /> miles.
 </div>
 <p>Click the map to change your starting location.</p>
 
@@ -46,7 +46,7 @@
 
             <script>
                 updateElementDistance(@landmarkDiv, @distanceID, @landmark.Latitude, @landmark.Longitude);
-                addDistanceElement(@landmarkDiv, @distanceID, @landmark.Latitude, @landmark.Longitude);
+                addDistanceElement(@landmarkDiv, @distanceID, @landmark.Latitude, @landmark.Longitude, '@landmark.Name');
             </script>
         </div>
     </div>

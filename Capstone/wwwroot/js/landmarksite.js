@@ -9,7 +9,7 @@ window.mapRadius;
 window.home_lat;
 window.home_lon;
 window.distanceElements = [];
-window.searchRadius = 15;
+window.searchRadius = 6;
 
 window.detailMap;
 window.detailMapMarker;
@@ -329,7 +329,8 @@ function showAllLandmarkMarkersOnSearchMap() {
             position: { lat: item.Latitude, lng: item.Longitude },
             map: map,
             icon: '/images/landmark.png',
-            draggable: false
+            draggable: false,
+            title: item.Title
         });
     });
 }
@@ -372,8 +373,8 @@ function updateElementDistance(elementDiv, element, latitude, longitude) {
     element.innerText = distanceString(distance);
 }
 
-function addDistanceElement(elementDiv, element, latitude, longitude) {
-    var distanceElement = { ElementDiv: elementDiv, Element: element, Latitude: latitude, Longitude: longitude }
+function addDistanceElement(elementDiv, element, latitude, longitude, title) {
+    var distanceElement = { ElementDiv: elementDiv, Element: element, Latitude: latitude, Longitude: longitude, Title: title}
     window.distanceElements.push(distanceElement);
 }
 
