@@ -44,7 +44,7 @@ namespace Capstone.Models
         [Display(Name = "Hours of Operation")]
         public string HoursOfOperation { get; set; }
 
-        [Display(Name = "Image URL")]
+        [Display(Name = "Image file name")]
         public string ImageLocation { get; set; }
 
         //public List<LandmarkReview> Reviews { get; set; }

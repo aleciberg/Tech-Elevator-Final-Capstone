@@ -11,18 +11,24 @@
     <button type="submit">Save</button>
 </form>
 
-<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 <div id="itineraryMapAndRoute">
     <div id="itineraryMap"></div>
     <div id="itineraryRoute"></div>
 </div>
 
-<form asp-action="ChangeItineraryStartingLatLon" asp-controller="Home" method="post">
-    <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
-    <input type="text" name="itineraryStartingLatitude" id="itineraryStartingLatitude" readonly value="@Model.Itinerary.StartingLatitude" />
-    <input type="text" name="itineraryStartingLongitude" id="itineraryStartingLongitude" readonly value="@Model.Itinerary.StartingLongitude" />
-    <button type="submit">Save starting location</button>
-</form>
+<div id="itineraryStartingLocation">
+    <div>
+        <input id="pac-input" class="controls" type="text" placeholder="Type starting location or click on map">
+    </div>
+    <div>
+        <form asp-action="ChangeItineraryStartingLatLon" asp-controller="Home" method="post">
+            <input type="hidden" name="itineraryId" value="@Model.Itinerary.ID" />
+            <input type="hidden" name="itineraryStartingLatitude" id="itineraryStartingLatitude" readonly value="@Model.Itinerary.StartingLatitude" />
+            <input type="hidden" name="itineraryStartingLongitude" id="itineraryStartingLongitude" readonly value="@Model.Itinerary.StartingLongitude" />
+            <button type="submit">Save starting location</button>
+        </form>
+    </div>
+</div>
 
 <script>
     //Clear landmarks from itinerary map
@@ -36,8 +42,10 @@
         @for (int position = 0; position < Model.Itinerary.LandmarksOrderedByVisitOrder.Count; position++)
         {
             <div id="itineraryLandmarkDiv">
-                <img id="itineraryImageThumbnail" src="~/images/landmarks/@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ImageLocation" />
-                <h4 id="itineraryName">@Model.Itinerary.LandmarksOrderedByVisitOrder[position].Name</h4>
+                <a asp-controller="Home" asp-action="Detail" asp-route-id="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID">
+                    <img id="itineraryImageThumbnail" src="~/images/landmarks/@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ImageLocation"/>
+                    <h4 id="itineraryName">@Model.Itinerary.LandmarksOrderedByVisitOrder[position].Name</h4>
+                </a>
                 <div id="itineraryLandmarkUpDown">
                     @if (position != 0)
                     {

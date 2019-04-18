@@ -44,7 +44,7 @@ function initMap() {
     //Map options.
     var options = {
         center: centerOfMap, //Set center.
-        zoom: 10 //The zoom value.
+        zoom: 12 //The zoom value.
     };
 
     //Create the map object.
@@ -126,6 +126,7 @@ function initItineraryMap() {
 
     google.maps.event.addDomListener(window, 'load', initItineraryMap);
     placeItineraryLandmarksOnMap();
+
     calculateAndDisplayRoute(directionsService, directionsDisplay);
 
     // Create the search box and link it to the UI element.
@@ -192,6 +193,11 @@ function initItineraryMap() {
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     var waypts = [];
+
+    if (window.itinerary_landmarks.length == 0) {
+        return;
+    }
+
     window.itinerary_landmarks.forEach(item => {
         waypts.push({
             location: { lat: item.Latitude, lng: item.Longitude },
@@ -262,10 +268,10 @@ function setRadiusOnMap() {
         window.mapRadius.setMap(null);
     }
     window.mapRadius = new google.maps.Circle({
-        strokeColor: '#FF0000',
+        strokeColor: '#add8e6',
         strokeOpacity: 0.8,
         strokeWeight: 2,
-        fillColor: '#FF0000',
+        fillColor: '#add8e6',
         fillOpacity: 0.35,
         map: window.map,
         center: { lat: window.home_lat, lng: window.home_lon },
@@ -322,7 +328,7 @@ function showAllLandmarkMarkersOnSearchMap() {
         new google.maps.Marker({
             position: { lat: item.Latitude, lng: item.Longitude },
             map: map,
-            icon: landmarkIconImage(distanceFromCurrentLocationInMiles(item.Latitude, item.Longitude)),
+            icon: '/images/landmark.png',
             draggable: false
         });
     });

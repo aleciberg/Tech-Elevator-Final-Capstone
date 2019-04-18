@@ -4,6 +4,9 @@
     ViewData["Title"] = "Home Page";
 }
 
+
+<div id="map">
+</div>
 <div class="search">
     Show only landmarks within <input id="index_distance_search_box"
                                       type="number"
@@ -12,11 +15,9 @@
                                       onclick="indexSearch(this.value)"
                                       value="15" /> miles.
 </div>
-
-<div id="map">
-</div>
-
 <p>Click the map to change your starting location.</p>
+
+<h3>Landmarks within your search radius:</h3>
 
 @foreach (Landmark landmark in Model)
 {

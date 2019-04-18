@@ -134,7 +134,7 @@ section {
     font-family: Roboto;
     font-size: 15px;
     font-weight: 300;
-    margin-left: 12px;
+    margin-left: 0px;
     padding: 0 11px 0 13px;
     text-overflow: ellipsis;
     width: 400px;
@@ -212,7 +212,7 @@ section {
     margin-left: auto;
     margin-right: auto;
     width: 940px;
-    height: 400px; 
+    height: 400px;
 }
 
 .list_facts {
@@ -255,6 +255,18 @@ section {
     display: inline-block;
     margin-right: 10px;
     min-width: 550px;
+}
+
+#itineraryStartingLocation {
+    display: flex;
+}
+
+    #itineraryStartingLocation div {
+        margin: 3px;
+    }
+
+#itineraryLandmarkDiv a {
+    text-decoration: none;
 }
 
 #itineraryImageThumbnail {
