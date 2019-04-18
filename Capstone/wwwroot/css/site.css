@@ -269,9 +269,13 @@ section {
     text-decoration: none;
 }
 
+#itineraryLandmarks a {
+    text-decoration: none;
+}
+
 #itineraryImageThumbnail {
-    height: 100px;
-    width: 100px;
+    height: auto;
+    max-width: 150px;
     padding: 5px;
 }
 

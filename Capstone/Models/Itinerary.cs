@@ -14,6 +14,7 @@ namespace Capstone.Models
         public string UserEmail { get; set; }
 
         [Display(Name = ("Name of Itinerary: "))]
+        [Required]
         public string Name { get; set; }
 
         public decimal StartingLatitude { get; set; }

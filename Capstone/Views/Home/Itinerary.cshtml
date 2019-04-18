@@ -35,15 +35,19 @@
     clearItineraryLandmarks();
 </script>
 <div id="itineraryTitleBox">
-    <h2>
-        Your Itinerary
-    </h2>
+
+    @if (Model.Itinerary.LandmarksOrderedByVisitOrder.Count != 0)
+    {
+        <h2>
+            Your Itinerary
+        </h2>
+    }
     <div id="itineraryLandmarks">
         @for (int position = 0; position < Model.Itinerary.LandmarksOrderedByVisitOrder.Count; position++)
         {
             <div id="itineraryLandmarkDiv">
                 <a asp-controller="Home" asp-action="Detail" asp-route-id="@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ID">
-                    <img id="itineraryImageThumbnail" src="~/images/landmarks/@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ImageLocation"/>
+                    <img id="itineraryImageThumbnail" src="~/images/landmarks/@Model.Itinerary.LandmarksOrderedByVisitOrder[position].ImageLocation" />
                     <h4 id="itineraryName">@Model.Itinerary.LandmarksOrderedByVisitOrder[position].Name</h4>
                 </a>
                 <div id="itineraryLandmarkUpDown">
@@ -95,16 +99,22 @@
 </div>
 
 <div id="itineraryBottomBox">
-    <h2>
-        Add Landmarks to Itinerary
-    </h2>
+
+    @if (Model.UnusedLandmarks.Count != 0)
+    {
+        <h2>
+            Add Landmarks to Itinerary
+        </h2>
+    }
 
     <div id="itineraryUnusedLandmarks">
         @foreach (Landmark landmark in Model.UnusedLandmarks)
         {
             <div id="itineraryLandmarks">
-                <img id="itineraryImageThumbnail" src="~/images/landmarks/@landmark.ImageLocation" />
-                <h4 id="itineraryName">@landmark.Name</h4>
+                <a asp-controller="Home" asp-action="Detail" asp-route-id="@landmark.ID">
+                    <img id="itineraryImageThumbnail" src="~/images/landmarks/@landmark.ImageLocation" />
+                    <h4 id="itineraryName">@landmark.Name</h4>
+                </a>
                 <div id="itineraryLandmarkAddToItinerary">
                     <form asp-action="AddLandmarkToItinerary" asp-controller="Home" method="post">
                         <button class="btn btn-sm btn-success" type="submit"><i class="fas fa-plus"></i></button>

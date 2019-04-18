@@ -203,6 +203,11 @@ namespace Capstone.Controllers
         {
             SetSession();
 
+            if (name == null)
+            {
+                return View("CreateItinerary");
+            }
+
             Itinerary itinerary = new Itinerary()
             {
                 Name = name,
