@@ -11,6 +11,9 @@ window.home_lon;
 window.distanceElements = [];
 window.searchRadius = 15;
 
+window.detailMap;
+window.detailMapMarker;
+
 window.itineraryMap;
 window.itineraryMarker = false;
 window.itinerary_lat;
@@ -55,6 +58,37 @@ function initMap() {
     google.maps.event.addDomListener(window, 'load', initMap);
 
     showAllLandmarkMarkersOnSearchMap();
+}
+
+function initDetailMap() {
+    //The center location of our map.
+    var centerOfMap = new google.maps.LatLng(window.detailMapMarker.position.lat, window.detailMapMarker.position.lng);
+
+    //Map options.
+    var options = {
+        center: centerOfMap, //Set center.
+        zoom: 10 //The zoom value.
+    };
+
+    window.detailMap = new google.maps.Map(document.getElementById('detailMap'), options);
+    showDetailMapMarker();
+}
+
+function addDetailMapMarker(latitude, longitude, name) {
+    window.detailMapMarker = {
+        position: { lat: latitude, lng: longitude },
+        title: name
+    };
+}
+
+function showDetailMapMarker() {
+    new google.maps.Marker({
+        position: window.detailMapMarker.position,
+        map: window.detailMap,
+        icon: '/images/landmark.png',
+        draggable: false,
+        title: window.detailMapMarker.title
+    });
 }
 
 function initItineraryMap() {
